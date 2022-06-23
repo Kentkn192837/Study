@@ -20,7 +20,7 @@ npx create-react-app new-app-name --typescript
 
 npmまたはyarnによるインストールが完了したら、次のコマンドを実行する
 ```
-create-react-app new-app-name --typescript
+yarn create-react-app new-app-name --template typescript
 ```
 `--typescript`オプションを付与することでReact×TypeScriptのアプリの雛形が作成される。<br>
 ※`new-app-name`はプロジェクトの名称<br><br>
