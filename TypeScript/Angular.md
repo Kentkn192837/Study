@@ -54,3 +54,14 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 ## 演算子解説
 ### `?.`演算子
 オブジェクトが空ではない場合だけプロパティにアクセスするように制御する演算子
+
+## ルーティング制御について
+
+ルーターが基点とするパスで`<base>`要素で宣言する。
+```html:route/src/index.html
+<!DOCTYPE html>
+<html>
+<head>
+<base href="/">
+</head>
+```
