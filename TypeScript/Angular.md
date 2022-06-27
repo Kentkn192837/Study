@@ -65,3 +65,6 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 <base href="/">
 </head>
 ```
+
+### ルートの定義
+リクエストURLに応じて処理の受け渡し先となるコンポーネントを決定するように記述する。
