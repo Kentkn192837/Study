@@ -68,3 +68,21 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 ### ルートの定義
 リクエストURLに応じて処理の受け渡し先となるコンポーネントを決定するように記述する。
+
+app.routing.tsにコンポーネントのパスとルーティングテーブルを定義し、RouterModuleの`forRoot`メソッドに渡す。
+
+```TypeScript:app.routing.ts
+// コンポーネントのパスの追加
+import { MainComponent } from './main.component';
+import { ExampleComponent } from './example.component';
+import { ErrorComponent } from './error.component';
+
+// ルーティングの定義
+const Route = [
+    {path: 'exam', component: ExampleComponent },
+    {path: '', component: MainComponent },
+    {path: '**', component: ExampleComponent },
+];
+
+export const My_Routes: ModuleWithProviders = RouterModule.forRoot(Route);
+```
