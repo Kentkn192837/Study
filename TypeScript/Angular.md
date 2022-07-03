@@ -79,10 +79,15 @@ import { ErrorComponent } from './error.component';
 
 // ルーティングの定義
 const Route = [
-    {path: 'exam', component: ExampleComponent },
-    {path: '', component: MainComponent },
-    {path: '**', component: ExampleComponent },
+    { path: 'exam', component: ExampleComponent },
+    { path: '', component: MainComponent },
+    { path: '**', component: ExampleComponent },
 ];
 
 export const My_Routes: ModuleWithProviders = RouterModule.forRoot(Route);
 ```
+
+## コンポーネントのライフサイクル
+コンポーネントは最初に生成されると、プロパティや子コンポーネントの変化を受けて表示を変化させていき、非表示になるタイミングで破棄される。
+
+`コンポーネント生成`->`コンストラクタ`->`ngOnChanges`->`ngOnInit`->`ngDoCheck`->`ngAfterContentInit`->`ngAfterContentChecked`->`ngAfterViewInit`->`ngAfterViewChecked`->`ngOnDestroyed`->`コンポーネント破棄`
