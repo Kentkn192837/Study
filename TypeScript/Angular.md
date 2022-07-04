@@ -91,3 +91,22 @@ export const My_Routes: ModuleWithProviders = RouterModule.forRoot(Route);
 コンポーネントは最初に生成されると、プロパティや子コンポーネントの変化を受けて表示を変化させていき、非表示になるタイミングで破棄される。
 
 `コンポーネント生成`->`コンストラクタ`->`ngOnChanges`->`ngOnInit`->`ngDoCheck`->`ngAfterContentInit`->`ngAfterContentChecked`->`ngAfterViewInit`->`ngAfterViewChecked`->`ngOnDestroyed`->`コンポーネント破棄`
+
+# Angularによるフォーム開発
+## 基本的なフォーム
+具体的なサンプルでフォームの用法を大まかに俯瞰する。
+```typescript:/src/app/app.module.ts
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+// フォーム機能のインポート
+import { FormsModule } from '@angular/forms';
+
+import { AppComponent } from './app.component';
+
+@NgModule({
+    imports: [ BrowserModule, FormsModule ],  // FormModuleモジュールでフォーム機能を有効化する
+    declarations: [ AppComponent ],
+    bootstrap: [ AppComponent ]
+})
+export class AppModule {}
+```
