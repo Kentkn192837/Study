@@ -66,3 +66,6 @@ export type Rows = Row[]
 # Next.jsとTypeScript
 
 # Nuxt.jsとTypeScript
+
+# フレームワークのディレクトリ構成のベストプラクティスについて
+- https://speakerdeck.com/okunokentaro/frontend-conference-2019
