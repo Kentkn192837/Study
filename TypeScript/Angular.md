@@ -95,7 +95,8 @@ export const My_Routes: ModuleWithProviders = RouterModule.forRoot(Route);
 # Angularによるフォーム開発
 ## 基本的なフォーム
 具体的なサンプルでフォームの用法を大まかに俯瞰する。
-```typescript:/src/app/app.module.ts
+```typescript:
+// /src/app/app.module.ts
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 // フォーム機能のインポート
@@ -109,4 +110,21 @@ import { AppComponent } from './app.component';
     bootstrap: [ AppComponent ]
 })
 export class AppModule {}
+```
+
+コンポーネントにhtml要素を記述していく
+```typescript:/src/app/app.component.ts
+// /src/app/app.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+    selector: "my-app",
+    template: `
+      <form #myForm="ngForm" (ngSubmit)="show()" novalidate>
+        <div>
+          <label for="mail">メールアドレス:</label><br />
+        </div>
+      </form>
+    `
+})
 ```
