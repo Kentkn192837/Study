@@ -123,6 +123,8 @@ import { Component } from '@angular/core';
       <form #myForm="ngForm" (ngSubmit)="show()" novalidate>
         <div>
           <label for="mail">メールアドレス:</label><br />
+          <input id="mail" name="mail" type="email"
+            [(ngModel)]="user.mail" #mail="ngModel" required email />
         </div>
       </form>
     `
