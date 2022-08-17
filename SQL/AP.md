@@ -46,8 +46,53 @@ SELECT 社員コード, 社員名, 部門表.部門コード, 部門名
 ```
 
 # 埋め込みSQL
+## 埋め込みSQLの基本
+この方法は条件に合ったデータを1行のみ取得できる。
 ```
 EXEC SQL SELECT 列名リスト INTO :ホスト変数名リスト
     FROM 表名
     (WHERE 条件式)
 ```
+
+- ホスト変数
+SELECT文の結果を受け取る変数。INTO句に指定して利用する。
+
+利用例
+```mysql:example.sql
+EXEC SQL SELECT 社員名, 年齢 INTO :name, :age FROM 社員表
+    WHERE 社員コード = '100';
+```
+社員表の中から社員コードが`100`となるような社員名と年齢をそれぞれ`:name`と`:age`で受け取る。
+
+## 複数行のデータの取得
+FETCH文を用いてカーソル処理と呼ばれる操作を行うことで複数行の結果を取得することができる。
+
+```c:example.c
+EXEC SQL DECLARE syain_cursor CURSOR FOR
+    SELECT 社員名 FROM 社員表
+    WHERE 住所 LIKE '東京%';
+
+EXEC SQL OPEN syain_cursor;
+while (1) {
+    EXEC SQL FETCH syain_cursor INTO :name;
+    if (SQLCODE != 0) break;
+    printf("氏名は%s\n", name);
+}
+EXEC SQL CLOSE syain_cursor;
+```
+
+- 処理途中でエラーが発生し、それまでの更新処理を取り消して元に戻す操作
+
+`EXEC SQL ROLLBACK`
+
+- トランザクションが正常終了したとき、更新処理を確定させる操作
+
+`EXEC SQL COMMIT`
+
+
+# データベース管理システム
+- トランザクション管理
+- 同時実行制御
+- 障害回復管理
+- 問い合わせ処理の効率化
+- データベースのチューニング
