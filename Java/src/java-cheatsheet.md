@@ -5,20 +5,21 @@
 - 可変長引数は1つしか使用できない。
 - 関数オーバーロードする場合、可変長引数を使って定義されたメソッドと引数リストがすべて明記されたメソッドでは後者のメソッドが優先して実行される。
 
-### 実行例
+<h3>実行例</h3>
+
 ```java:test1.java
-class Test
+public class Test
 {
-    private void method(String s, int... a)
+    public void method(String s, int... a)
     {
         System.out.println(s + " サイズ : " + a.length);
         for (int i : a) {
-            System.out.println(" 第2引数の値 :" + i)
+            System.out.println(" 第2引数の値 :" + i);
         }
     }
 }
 
-private class Test1
+class Test1
 {
     public static void main(String[] args)
     {
@@ -32,4 +33,19 @@ private class Test1
         // obj.method("5回目 ", null);
     }
 }
+```
+
+<h3>実行結果</h3>
+
+```
+1回目  サイズ : 0
+2回目  サイズ : 1
+ 第2引数の値 :10
+3回目  サイズ : 2
+ 第2引数の値 :10
+ 第2引数の値 :20
+4回目  サイズ : 3
+ 第2引数の値 :10
+ 第2引数の値 :20
+ 第2引数の値 :30
 ```
