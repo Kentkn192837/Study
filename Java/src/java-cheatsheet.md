@@ -1,5 +1,7 @@
 - [クラス・メソッド・プロパティ](#クラスメソッドプロパティ)
   - [仮引数を可変長にしたい](#仮引数を可変長にしたい)
+- [データベース](#データベース)
+  - [データベースに接続したい](#データベースに接続したい)
 
 # クラス・メソッド・プロパティ
 ## 仮引数を可変長にしたい
@@ -51,4 +53,30 @@ class Test1
  第2引数の値 :10
  第2引数の値 :20
  第2引数の値 :30
+```
+
+# データベース
+## データベースに接続したい
+JDBCドライバをダウンロードすると、`java.sql.DriverManager`クラスに利用可能なドライバとして登録される。
+
+<h3>実装例</h3>
+
+```java:SqlConnect.java
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class SqlConnect
+{
+    public static void main(String[] args)
+    {
+        try (Connection db = DriverManager.getConnection("データベースへのurl",
+                                                         "root",
+                                                         "password")){
+            System.out.println("接続しました。");
+        } catch (SQLException e) {
+            System.out.println("接続エラー：" + e.getMessage());
+        }
+    }
+}
 ```
