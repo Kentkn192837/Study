@@ -2,6 +2,8 @@
   - [仮引数を可変長にしたい](#仮引数を可変長にしたい)
 - [データベース](#データベース)
   - [データベースに接続したい](#データベースに接続したい)
+- [ファイル入出力](#ファイル入出力)
+  - [ファイルを読み込みたい](#ファイルを読み込みたい)
 
 # クラス・メソッド・プロパティ
 ## 仮引数を可変長にしたい
@@ -78,5 +80,17 @@ public class SqlConnect
             System.out.println("接続エラー：" + e.getMessage());
         }
     }
+}
+```
+# ファイル入出力
+## ファイルを読み込みたい
+`FileReader`オブジェクトを取得する。
+
+```java
+try {
+    File file = new File(file_name);
+    FileReader filereader = new FileReader(file);
+} catch (FileNotFoundException e) {
+    System.out.println(e);
 }
 ```
