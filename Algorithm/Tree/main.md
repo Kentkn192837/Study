@@ -13,3 +13,28 @@ def main():
 if __name__ == '__main__':
     main()
 ```
+
+## 幅優先探索でデータを取り出す
+
+```python:bfs.py
+def bfs(data):
+    # キューを探索を開始するノードのインデックス番号で初期化
+    queue = [0]
+
+    while len(queue) > 0:
+        pos = queue.pop(0)      # 探索するノードのインデックス番号を取得
+        print(pos, end=' ')
+        for i in data[pos]:
+            queue.append(i)     # 探索したノードから分岐している枝の情報を取得
+
+def main():
+    data = [[1, 2],
+            [3, 4], [5, 6],
+            [7, 8], [9, 10], [11, 12], [13, 14],
+            [], [], [], [], [], [], []]
+    
+    bfs(data)
+
+if __name__ == '__main__':
+    main()
+```
