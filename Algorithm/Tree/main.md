@@ -35,5 +35,11 @@ def bfs(data):
 - 基本の深さ優先探索例
 
 ```python:dfs.py
-def dfs(data):
+def dfs(pos):
+    print(pos, end=' ')
+    for i in data[pos]:
+        dfs(i)
+
+# 最初に探索するノードを0に指定
+dfs(0)
 ```
