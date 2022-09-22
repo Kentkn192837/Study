@@ -29,3 +29,11 @@ def bfs(data):
         for i in data[pos]:
             queue.append(i)     # 探索したノードから分岐している枝の情報を取得
 ```
+
+## 深さ優先探索でデータを取り出す
+
+- 基本の深さ優先探索例
+
+```python:dfs.py
+def dfs(data):
+```
