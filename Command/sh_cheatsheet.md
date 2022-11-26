@@ -17,3 +17,16 @@ Hello.
 #!/bin/bash
 echo Hello.
 ```
+
+# sourceコマンドでシェルを実行すると、終了後も変数を参照できる
+```hello_var.sh:
+#!/bin/bash
+hello_var="Hello"
+```
+
+
+```
+$ source hello_var.sh
+$ echo $hello_var
+Hello
+```
