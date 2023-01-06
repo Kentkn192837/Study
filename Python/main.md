@@ -12,10 +12,34 @@
 
 # Pythonでyml(ヤムル)ファイルを読み込む手順
 `yaml`ライブラリをインポートする。
+```yaml:config.yml
+hyperparameterA:
+    name: 'ParamA'
+    param1: 1
+    param2: 2
+
+hyperparameterB:
+    name: 'ParamB'
+    param1: 3
+    param2: 4
+```
+
+のような`config.yml`があるとすると、
 
 ```python:test.py
 import yaml
 
 with open('config.yml', 'r') as yml:
     config = yaml.load(yml, Loader=yaml.SafeLoader)
+
+print(f"name: {config['hyperparameterA']['name']}")
+print(f"name: {config['hyperparameterA']['param1']}")
+print(f"name: {config['hyperparameterA']['param2']}")
+
+print(f"name: {config['hyperparameterB']['name']}")
+print(f"name: {config['hyperparameterB']['param1']}")
+print(f"name: {config['hyperparameterB']['param2']}")
+
 ```
+
+のようにアクセスする。
