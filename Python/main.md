@@ -8,3 +8,14 @@
 
 ## *args: 複数の引数をタプルとして受け取る
 ## **kwargs: 複数の引数を辞書として受け取る
+
+
+# Pythonでyml(ヤムル)ファイルを読み込む手順
+`yaml`ライブラリをインポートする。
+
+```python:test.py
+import yaml
+
+with open('config.yml', 'r') as yml:
+    config = yaml.load(yml, Loader=yaml.SafeLoader)
+```
