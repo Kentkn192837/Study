@@ -6,6 +6,8 @@
   - [ファイルを読み込みたい](#ファイルを読み込みたい)
 - [コレクション](#コレクション)
   - [ArrayListの利用](#arraylistの利用)
+- [例外と例外処理](#例外と例外処理)
+  - [独自例外クラスの定義方法](#独自例外クラスの定義方法)
 
 # クラス・メソッド・プロパティ
 ## 仮引数を可変長にしたい
@@ -124,4 +126,28 @@ public class Main
         for (Integer i : list) { System.out.println(i + " "); }
     }
 }
+```
+
+
+# 例外と例外処理
+## 独自例外クラスの定義方法
+Javaではプログラマが独自で例外クラスを定義することが可能。一般的にはExceptionクラスを継承して実装する。
+```
+[修飾子] class クラス名 extends Exception {
+
+}
+```
+
+```java:example.java
+private class MyException extends Exception
+{
+
+}
+```
+
+Exceptionクラスを継承することで、ExceptionクラスおよびそのスーパークラスであるThrowableクラスが
+提供しているメソッドを引き継ぐことができる。
+```
+void printStackTrace()        エラーを追跡して発生箇所を特定するエラートレースを出力する
+String getMessage()           エラーメッセージを取得する
 ```
