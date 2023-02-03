@@ -43,3 +43,15 @@ print(f"name: {config['hyperparameterB']['param2']}")
 ```
 
 のようにアクセスする。
+
+# 複数行に渡る標準出力を上書きしながら出力する方法
+`print`で出力する文字列の最初か最後に`\r`を結合して、引数endに空白をしていする。
+
+```python
+import time
+
+for i in range(10):
+    print(f"{i} 回目\r", end=' ')
+    time.sleep(1)
+print("完了")
+```
