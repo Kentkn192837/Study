@@ -1,0 +1,12 @@
+jupyterlab == 0.35.4
+jupyter-tensorboard == 0.2.0
+numpy == 1.16.4
+keras == 2.2.2
+tensorboard
+matplotlib
+seaborn
+opencv-contrib-python
+scikit-learn
+scikit-image
+graphviz
+pydot
