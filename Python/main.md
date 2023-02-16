@@ -55,3 +55,22 @@ for i in range(10):
     time.sleep(1)
 print("\n完了")
 ```
+
+
+
+# 文字列の途中で変数を出力する方法
+3つの方法がある
+- `%`を使う(C言語のprintfと似た方法)
+- format()を使う
+- f文字列を使う
+
+```python:
+name = "Alice"
+age = 25
+
+print("Alice is %d years old" % i)
+print("%s is %d years old" % (s, i))
+```
+
+(参考)
+https://docs.python.org/ja/3/library/stdtypes.html#printf-style-string-formatting
