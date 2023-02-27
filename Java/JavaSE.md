@@ -49,3 +49,28 @@ Main.class -> java.base
     com.seshop.sample.main      -> java.io      java.base
     com.seshop.sample.main      -> java.lang    java.base
 ```
+
+# javadoc形式でドキュメントを作成する時のコメントアウトの方法
+`/** ～*/`でコメントアウトする。
+
+- 例
+```java:
+/**
+*   @param index 取得するデータのインデックス
+*   @return 取得した個人データ
+*/
+public Employee getEmployee(int index)
+```
+
+### javadocの主なタグ
+#### @see 参照先名
+対象クラスから他クラスや関連するパッケージへの参照リンクを作成する。
+
+#### @exception 例外クラス 説明
+対象メソッドがスローする可能性がある例外の説明を記述する。
+
+#### @param 引数名 説明
+コンストラクタやメソッドの引数の説明を記述する。
+
+#### @return 説明
+対象メソッドの戻り値の説明を記述する。
