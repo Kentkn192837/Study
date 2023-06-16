@@ -53,10 +53,12 @@ public interface ATM {
     void deposit(String accountName, int amount);
     // public abstract void deposit(String accountName, int amount); と同じ
 
+    // privateを付与することもできる。
     static void staticMethod() {
         :
     }
 
+    // 暗黙的に修飾子はpublicとなる。
     default void defaultMethod() {
         :
     }
@@ -108,6 +110,6 @@ public class MyClass implements MyInterface1, MyInterface2 {
 ```
 
 
-- (インターフェース)クラスに含まれるメソッドの具体的な処理内容を記述せず、変数とメソッドの型のみを定義したもの
+- (インターフェース)クラスに含まれるメソッドの具体的な処理内容を記述せず、定数とメソッドの型のみを定義したもの
 - (抽象クラス)抽象メソッドは具体的な処理内容を記述せず、メソッド名や引数などの定義だけを宣言する
 <br>(参考)https://www.internetacademy.jp/it/programming/java/difference-between-interface-and-abstract.html?fbclid=IwAR2rBu0BPTYlaKCapSbiqEwC9qxuI7f6H3LcUCqqg4-2hVo6zmGsh3BH8BQ
