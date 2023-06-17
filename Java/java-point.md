@@ -113,3 +113,60 @@ public class MyClass implements MyInterface1, MyInterface2 {
 - (インターフェース)クラスに含まれるメソッドの具体的な処理内容を記述せず、定数とメソッドの型のみを定義したもの
 - (抽象クラス)抽象メソッドは具体的な処理内容を記述せず、メソッド名や引数などの定義だけを宣言する
 <br>(参考)https://www.internetacademy.jp/it/programming/java/difference-between-interface-and-abstract.html?fbclid=IwAR2rBu0BPTYlaKCapSbiqEwC9qxuI7f6H3LcUCqqg4-2hVo6zmGsh3BH8BQ
+
+
+# ポリモフィズム
+- 操作を利用する側が相手のオブジェクトのクラスを意識しなくても、相手のオブジェクトによって適切な処理が実行される仕組みのことをポリモフィズムという。
+- ポリモフィズムではサブクラスのオブジェクトをすべてスーパークラスのオブジェクトとして扱うことができる。
+
+### ポリモフィズム実装例
+```java:
+/*
+    スーパークラス: BankAccount
+    サブクラス: CheckingAccount, SavingsAccount, ForeignCurrencyAccount
+*/
+private ArrayList<BankAccount> accounts = new ArrayList<>();
+accounts.add(new CheckingAccount(accountName, balance));
+accounts.add(new SavingsAccount(accountName, balance));
+accounts.add(new ForeignCurrencyAccount(accountName, balance));
+
+for (BankAccount account: accounts) {
+    account.display();
+}
+```
+
+
+## 参照型のキャスト
+クラス間に継承関係や実現関係がある場合、参照型でもキャストができる。
+### キャストできる場合
+- サブクラスのインスタンスをスーパークラスの型に代入する場合。
+- インターフェースの実装クラスをインターフェースの型に代入する場合。
+
+```java
+// SavingsAccount型をBankAccount型にキャスト(暗黙的型変換)
+BankAccount bankAccount = new SavingsAccount();
+
+// BankAccount型をSavingsAccount型にダウンキャスト(明示的型変換)
+SavingsAccount savingsAccount = (SavingsAccount)bankAccount;
+```
+
+### ダウンキャストできる場合
+- スーパークラスの型で参照しているオブジェクトをサブクラスの型に代入する場合。(キャストしたオブジェクトを元の型に戻す)
+- インターフェースの型で参照しているオブジェクトを実装クラスの型に代入する場合。(キャストしたオブジェクトを元の型に戻す)
+
+
+## instanceof演算子
+ダウンキャストを行う場合は、元のオブジェクトとの継承関係であったり、実現関係であったりしなければならない。これらに当てはまらない型同士をダウンキャストしようとすると、`java.lang.ClassCastException`の例外が発生する。
+
+`java.lang.ClassCastException`が発生しないかどうか確認するために、`instanceof`演算子を利用する。
+```java:example.java
+public void accountDisplay(BankAccount account) {
+    account.display();
+    if (!account instanceof ForeignCurrencyAccount) {
+        return;
+    }
+    // BankAccount型からForeignCurrencyAccount型にダウンキャスト
+    ForeignCurrencyAccount foreignAccount = (ForeignCurrencyAccount)account;
+    foreignAccount.currencyDisplay();
+}
+```
