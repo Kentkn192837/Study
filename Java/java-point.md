@@ -116,9 +116,45 @@ public class MyClass implements MyInterface1, MyInterface2 {
 
 
 # インタフェース実装例
-```java:instrument.java
+```java:Program.java
+import java.util.ArrayList;
 interface Instrument {
+    // public abstract void play(); と同じ
     void play();
+}
+
+class Piano implements Instrument {
+    @Override
+    public void play() {
+        System.out.println("ポロンポロン");
+    }
+}
+
+class Guitar implements Instrument {
+    @Override
+    public void play() {
+        System.out.println("ジャカジャン");
+    }
+}
+
+class Drum implements Instrument {
+    @Override
+    public void play() {
+        System.out.println("ドドドン");
+    }
+}
+
+class Program {
+    public static void main(String[] args) {
+        ArrayList<Instrument> instruments = new ArrayList<>();
+        instruments.add(new Piano());
+        instruments.add(new Guitar());
+        instruments.add(new Drum());
+
+        for (Instrument instrument: instruments) {
+            instrument.play();
+        }
+    }
 }
 ```
 
