@@ -37,13 +37,13 @@ public class SavingAccount extends BankAccount {
 ```
 
 
-# インターフェース
-- インターフェースの宣言ではメソッドの具体的な処理内容を記述せず、メソッドの型だけを先に定義する。 
-- 複数のインターフェースを継承して新しいインターフェースを定義することができる。（多重継承）
+# インタフェース
+- インタフェースの宣言ではメソッドの具体的な処理内容を記述せず、メソッドの型だけを先に定義する。 
+- 複数のインタフェースを継承して新しいインタフェースを定義することができる。（多重継承）
 - 具象メソッドとして、static, defaultメソッドを定義できる。
 - defaultメソッドは実装クラスで利用したり、オーバーライドできる。
  
-## インターフェースの宣言
+## インタフェースの宣言
 ```java:ATM.java
 public interface ATM {
     :
@@ -65,23 +65,23 @@ public interface ATM {
 }
 ```
 
-- インターフェースで定義した定数は、修飾子を省略しても自動的に「public static final」が付与される。
-- インターフェースで定義した抽象メソッドは、修飾子を省略しても自動的に「public abstract」が付与される。
+- インタフェースで定義した定数は、修飾子を省略しても自動的に「public static final」が付与される。
+- インタフェースで定義した抽象メソッドは、修飾子を省略しても自動的に「public abstract」が付与される。
 
-## インターフェースの継承
+## インタフェースの継承
 ```java:NewATM.java
 interface NewATM extends ATM {
     :
 }
 ```
 
-- 既存のインターフェースを継承できる。
-- スーパーインターフェースに定義されている定数やメソッドは、サブインターフェースに継承される。
+- 既存のインタフェースを継承できる。
+- スーパーインタフェースに定義されている定数やメソッドは、サブインタフェースに継承される。
 
 
-## インターフェースの実装
+## インタフェースの実装
 ```java:BankBranch.java
-// [修飾子] class クラス名 implements インターフェース名 {}
+// [修飾子] class クラス名 implements インタフェース名 {}
 public class BankBranch implements ATM {
     :
     @Override
@@ -94,15 +94,15 @@ public class BankBranch implements ATM {
 }
 ```
 
-- インターフェースを実装したクラスはインスタンス化できる。
-- クラスの継承とインターフェースの実装は同時にできる
+- インタフェースを実装したクラスはインスタンス化できる。
+- クラスの継承とインタフェースの実装は同時にできる
 ```java
 public class MyClass extends MySuperClass implements MyInterface {
     :
 }
 ```
 
-- 複数のインターフェースを実装する
+- 複数のインタフェースを実装する
 ```java
 public class MyClass implements MyInterface1, MyInterface2 {
     :
@@ -110,10 +110,17 @@ public class MyClass implements MyInterface1, MyInterface2 {
 ```
 
 
-- (インターフェース)クラスに含まれるメソッドの具体的な処理内容を記述せず、定数とメソッドの型のみを定義したもの
+- (インタフェース)クラスに含まれるメソッドの具体的な処理内容を記述せず、定数とメソッドの型のみを定義したもの
 - (抽象クラス)抽象メソッドは具体的な処理内容を記述せず、メソッド名や引数などの定義だけを宣言する
 <br>(参考)https://www.internetacademy.jp/it/programming/java/difference-between-interface-and-abstract.html?fbclid=IwAR2rBu0BPTYlaKCapSbiqEwC9qxuI7f6H3LcUCqqg4-2hVo6zmGsh3BH8BQ
 
+
+# インタフェース実装例
+```java:instrument.java
+interface Instrument {
+    void play();
+}
+```
 
 # ポリモフィズム
 - 操作を利用する側が相手のオブジェクトのクラスを意識しなくても、相手のオブジェクトによって適切な処理が実行される仕組みのことをポリモフィズムという。
@@ -140,7 +147,7 @@ for (BankAccount account: accounts) {
 クラス間に継承関係や実現関係がある場合、参照型でもキャストができる。
 ### キャストできる場合
 - サブクラスのインスタンスをスーパークラスの型に代入する場合。
-- インターフェースの実装クラスをインターフェースの型に代入する場合。
+- インタフェースの実装クラスをインタフェースの型に代入する場合。
 
 ```java
 // SavingsAccount型をBankAccount型にキャスト(暗黙的型変換)
@@ -152,7 +159,7 @@ SavingsAccount savingsAccount = (SavingsAccount)bankAccount;
 
 ### ダウンキャストできる場合
 - スーパークラスの型で参照しているオブジェクトをサブクラスの型に代入する場合。(キャストしたオブジェクトを元の型に戻す)
-- インターフェースの型で参照しているオブジェクトを実装クラスの型に代入する場合。(キャストしたオブジェクトを元の型に戻す)
+- インタフェースの型で参照しているオブジェクトを実装クラスの型に代入する場合。(キャストしたオブジェクトを元の型に戻す)
 
 
 ## instanceof演算子
