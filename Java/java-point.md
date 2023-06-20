@@ -213,3 +213,35 @@ public void accountDisplay(BankAccount account) {
     foreignAccount.currencyDisplay();
 }
 ```
+
+
+# Java API
+## Objectクラス
+`java.lang`パッケージで提供される`Object`クラスは、標準クラスとユーザー定義クラスすべてのクラスのスーパークラスとなる。したがって、暗黙的にすべてのクラスは`Object`クラスを継承している。
+```java
+// こう定義しても
+class BankUser {
+    :
+}
+
+// 暗黙的にこのように定義しているのと同じ
+class BankUser extends Object {
+    :
+}
+```
+
+## == と equals() の仕組み
+- `==`ではオブジェクト自身の参照先が同じかどうかを比較している。
+- String型の`equals()`では文字列の情報をchar型を要素に持つ配列として属性に定義しているため、二つの配列から取り出した文字を1文字1文字比較して、すべての文字が同じなら`true`を返す処理を行っている。
+
+```java:
+String str1 = new String("Hello");
+String str2 = new String("Hello");
+
+// 参照先が違うのでfalseと表示される。
+System.out.println(str1 == str2);
+// equals()によって文字を一文字ずつ比較しているので、trueと表示される。
+System.out.println(st1.equals(str2));
+```
+
+# 単体テスト
