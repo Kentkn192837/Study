@@ -244,4 +244,17 @@ System.out.println(str1 == str2);
 System.out.println(st1.equals(str2));
 ```
 
+## コレクションAPI
+
+## ジェネリクス
+- クラスやメソッドの定義時に特定の型を指定せず、クラスやメソッドを利用する際に利用者側で型を指定するための機能。型パラメータには`T`,`E`,`K`,`V`のようなアルファベット1文字が使用されるが、任意の文字(列)を指定することもできる。
+
+```java:
+class MyClass<T> {
+    private T prm;
+}
+
+MyClass<int> myClass = new MyClass<>();
+```
+
 # 単体テスト
