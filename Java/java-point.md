@@ -260,3 +260,78 @@ MyClass<int> myClass = new MyClass<>();
 # エラーへの対処
 ## 例外
 - プログラム実行時のエラーを`例外`と言う。これに対し、スペルミスなどによってプログラムのコンパイル時に発生するエラーを`コンパイルエラー`と言う。
+- 例外には`標準例外`と`ユーザー定義例外`がある。
+
+
+## ユーザー定義例外
+- 開発者が作成する例外で、`Exception`クラスのサブクラスとして定義し、必要なメンバ変数やメソッドを追加して作成する。
+
+```java:exceptionexample.java
+// Exceptionクラスを継承
+class BusinessException extends Exception {
+    BusinessException(String message) {
+        super(message);     // エラーメッセージを継承する
+    }
+}
+```
+
+## 例外を明示的に発生させる方法
+ユーザー定義例外を発生させるためには、`throw`を使用して例外を発生させるべき不適切な処理が行われた箇所で例外クラスのオブジェクトを生成してスローする。
+
+```java:
+void decreaseBalance(int amount) throws BusinessException {
+    if (balance < amount) {
+        throw new BusinessException("口座「預金残高が足りません」");
+    }
+    balance -= amount;
+}
+```
+
+- `throws`キーワードはメソッド内にチェック例外を発生させる処理を記述した場合に使用する。非チェック例外の場合は省略できる。
+- `throws`で発生する可能性のある例外を複数記述する時は`,`で区切る。
+
+```java:
+public int calcDiv(int a, int b) throws ArithmeticException, NullPointerException {
+    :
+}
+```
+
+## try-catch文の注意事項
+### 複数の例外オブジェクトをキャッチする場合
+catchブロックを複数記述する場合に指定する例外クラス間に継承関係がある場合は、サブクラスのcatchブロックをスーパークラスの例外より先に記述する。
+
+```java:
+try {
+    :
+} catch (NullPointerException e) {
+    /*
+        NullPointerException例外はException例外クラスのサブクラスなので、
+        Exceptionクラスのcatchブロックより先に記述する。
+    */
+    :
+} catch (Exception e) {
+    :
+} finally {
+    // try-catchブロック内にreturn文があっても、finally内の処理は実行される。
+    :
+}
+```
+
+### multi-catch文を利用した例外処理
+- 例外処理を`|`で分割すると、複数の種類の例外に対して、同じcatchブロックで例外処理を行う。
+- 継承関係にある例外クラス同士はmulti-catch文で利用できない。
+
+```java:
+try {
+    BankAccount account = findAccount(accountName);
+    account.decreaseBalance(amount);
+} catch(NullPointerException | BusinessException e) {
+    // catch(NullPointerException | Exception e) とするとコンパイルエラーとなる
+    System.out.println("例外が発生しました");
+    e.getMessage();
+    e.printStackTrace();
+}
+```
+
+## 例外の再スロー
+## try-with-resource文
