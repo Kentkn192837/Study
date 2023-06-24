@@ -328,10 +328,29 @@ try {
 } catch(NullPointerException | BusinessException e) {
     // catch(NullPointerException | Exception e) とするとコンパイルエラーとなる
     System.out.println("例外が発生しました");
-    e.getMessage();
+    System.out.println(e.getMessage());
     e.printStackTrace();
 }
 ```
 
 ## 例外の再スロー
+
+
 ## try-with-resource文
+### リソース
+終了時に`close()`メソッドを呼び出してクローズする必要のあるオブジェクトを`リソース`と呼ぶ。tryブロックの開始時にリソースを宣言すると、try-catch文を抜けるときに暗黙的にclose()が呼び出される。この構文をtry-with-resource文と呼ぶ。
+
+```java:
+import java.io.FileReader;
+import java.io.BufferedReader;
+:
+try (FileReader fr = new FileReader(filePath);
+        BufferedReader br = new BufferedReader(fr)) {
+    String line;
+    while ((line = br.readLine()) != null) {
+        System.out.println(line);
+    }
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
