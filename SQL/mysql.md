@@ -120,3 +120,272 @@ INSERT INTO テーブル名 SELECT * FROM 元となるテーブル名;
 ```
 
 # データ型
+
+
+# SQLサンプルコード
+## 基本の検索
+1. `SALES`表から全ての列を取得する。
+```sql:
+select * from SALES;
+```
+
+2. `NEW_PRODUCTS`表から全ての列を取得する。
+```sql:
+select * from NEW_PRODUCTS;
+```
+
+3. `PRODUCTS2`表から`PRODUCT_NAME`,`LIST_PRICE`列を取得する。
+```sql:
+select * from PRODUCTS2;
+```
+
+4.  
+```sql:
+select PRODUCT_ID, SALES_DATE, PRICE * NUM from SALES;
+```
+
+5. 
+```sql:
+select * from CATEGORIES where CATEGORY_ID <> 'KE';
+```
+
+6. 
+```sql:
+select * from STAFFS where STAFF_NAME = '田中賢介';
+```
+
+7. 
+```sql:
+select * from STOCK where STOCK_NUM >= 5;
+```
+
+8. `SALES`表から`CLIENTELE_ID`が`03`または`08`である行を選択して全ての列を取得する。
+```sql:
+select * from SALES where CLIENTELE_ID in('03', '08');
+```
+
+9. `STAFFS`表から`STORE_ID`が`002`または`003`でない行を選択して全ての列を取得する。
+```sql:
+select * from STAFFS where STORE_ID not in('002', '003');
+```
+
+10. 
+```sql:
+select * from NEW_PRODUCTS
+where LIST_PRICE between 10000 and 15000;
+```
+
+11. 
+```sql:
+select * from SALES
+where PRICE * NUM not between 50000 and 100000;
+```
+
+12. 
+```sql:
+select * from PRODUCT2
+where PRODUCT_NAME like '%黒%';
+```
+
+13. 
+```sql:
+select * from STAFFS
+where STAFF_NAME like '_田%';
+```
+
+14. 
+```sql:
+select * from STAFFS
+where MAN_STAFF_ID is NULL;
+```
+
+15. 
+```sql:
+select * from STAFFS
+where MAN_SATFF_ID is not NULL;
+```
+
+16. `PRODUCTS2`表から`LIST_PRICE`が昇順になるように全ての列を取得する。
+```sql:
+select * from PRODUCTS2 order by LIST_PRICE asc;
+```
+
+17. 
+```sql:
+select CLIENTELE_ID, SUM(PRICE * NUM) from SALES group by CLIENTELE_ID;
+```
+
+18. 
+```sql:
+select SUPP_ID, AVG(COST_PRICE) from PRODUCTS2 group by SUPP_ID;
+```
+
+19. 
+```sql:
+select STAFF_ID, COUNT(*) from SALES
+where STAFF_ID = '010161' group by STAFF_ID;
+```
+
+20. 
+```sql:
+select SALES_DATE, PRODUCT_ID, PRICE * NUM from SALES
+order by SALES_DATE, PRICE * NUM desc;
+```
+
+21. 
+```sql:
+select STAFF_ID, SUM(PRICE * NUM) from SALES
+group by STAFF_ID having SUM(PRICE * NUM) >= 80000;
+```
+
+22. 
+```sql:
+select CLIENTELE_ID, AVG(PRICE * NUM) from SALES
+where CLIENTELE_ID between '01' and '05'
+group by CLIENTELE_ID having AVG(PRICE * NUM) >= 20000;
+```
+
+23. 
+```sql:
+select STAFF_ID, SUM(PRICE * NUM) from SALES
+where STAFF_ID in ('020122', '030114', '010144')
+group by STAFF_ID having SUM(PRICE * NUM) >= 90000;
+```
+
+## 応用の検索
+1. 
+```sql:
+```
+
+2. 
+```sql:
+```
+
+3. 
+```sql:
+```
+
+4.  
+```sql:
+```
+
+5. 
+```sql:
+```
+
+6. 
+```sql:
+```
+
+7. 
+```sql:
+```
+
+8. 
+```sql:
+```
+
+9. 
+```sql:
+```
+
+10.  
+```sql:
+```
+
+11.  
+```sql:
+```
+
+12.  
+```sql:
+```
+
+13.  
+```sql:
+```
+
+14.  
+```sql:
+```
+
+15.  
+```sql:
+```
+
+16.  
+```sql:
+```
+
+17.  
+```sql:
+```
+
+## 
+1. 
+```sql:
+```
+
+2. 
+```sql:
+```
+
+3. 
+```sql:
+```
+
+4.  
+```sql:
+```
+
+5. 
+```sql:
+```
+
+6. 
+```sql:
+```
+
+7. 
+```sql:
+```
+
+8. 
+```sql:
+```
+
+9. 
+```sql:
+```
+
+10.  
+```sql:
+```
+
+11.  
+```sql:
+```
+
+12.  
+```sql:
+```
+
+13.  
+```sql:
+```
+
+14.  
+```sql:
+```
+
+15.  
+```sql:
+```
+
+16.  
+```sql:
+```
+
+17.  
+```sql:
+```
