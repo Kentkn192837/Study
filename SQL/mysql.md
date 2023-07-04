@@ -129,9 +129,9 @@ INSERT INTO テーブル名 SELECT * FROM 元となるテーブル名;
 select * from SALES;
 ```
 
-2. `NEW_PRODUCTS`表から全ての列を取得する。
+2. `NEW_PRODUCTS`表から全ての列を`PRODUCT_ID`が昇順になるように取得する。
 ```sql:
-select * from NEW_PRODUCTS;
+select * from NEW_PRODUCTS order by PRODUCT_ID asc;
 ```
 
 3. `PRODUCTS2`表から`PRODUCT_NAME`,`LIST_PRICE`列を取得する。
@@ -181,7 +181,10 @@ select * from SALES
 where PRICE * NUM not between 50000 and 100000;
 ```
 
-12. 
+12. `PRODUCT2`表から`PRODUCT_NAME`が`%黒%`であるような列を全て取得する。
+LIKE演算子
+- 「%」は、任意の文字数からなる文字列
+- 「_」は任意の一文字
 ```sql:
 select * from PRODUCT2
 where PRODUCT_NAME like '%黒%';
