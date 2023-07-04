@@ -281,58 +281,166 @@ on STAFFS.STAFF_ID = SALES.STAFF_ID;
 
 4.  
 ```sql:
+select
+    STAFF_ID, STAFF_NAME, STORES.STORE_ID, STORE_NAME, ADDRESS
+from
+    STAFFS inner join STORES
+on
+    STAFFS.STAFF_ID = STORES.STORE_ID;
 ```
 
 5. 
 ```sql:
+select
+    COLOR_ID, COLOR_NAME, SIZE_ID, SIZE_NAME
+from
+    COLORS cross join SIZES;
 ```
 
 6. 
 ```sql:
+select
+    PRODUCTS2.PRODUCT_ID, NUM, PRODUCT_NAME
+from
+    PRODUCTS2 left outer join SALES
+on
+    SALES.PRODUCT_ID = PRODUCTS2.PRODUCT_ID;
 ```
 
 7. 
 ```sql:
+select
+    PRODUCTS2.PRODUCT_ID, PRODUCT_NAME, STOCK_NUM
+from
+    STOCK right outer join PRODUCTS2
+on
+    STOCK.PRODUCT_ID = PRODUCTS2.PRODUCT_ID;
 ```
 
 8. 
 ```sql:
+select
+    WORKER.STAFF_ID, WORKER.STAFF_NAME, MANAGER.STAFF_NAME as MANAGER_NAME
+from
+    STAFFS as WORKER inner join STAFFS as MANAGER
+on
+    WORKER.MAN_STAFF_ID = MANAGER.STAFF_ID;
 ```
 
 9. 
 ```sql:
+select
+    WORKER.STAFF_ID, WORKER.STAFF_NAME, MANAGER.STAFF_NAME as MANAGER_NAME
+from
+    STAFFS as WORKER left outer join STAFFS as MANAGER
+on
+    WORKER.MAN_STAFF_ID = MANAGER.STAFF_ID;
 ```
 
-10.  
+10. 
+副問い合わせに関するSQL
 ```sql:
+select
+    STAFF_ID, PRODUCT_ID, PRICE * NUM as SUM_PRICE, SALES_DATE
+from
+    SALES
+where
+    STAFF_ID = (
+        select STAFF_ID from STAFFS where STAFF_NAME = '田中正義';
+    );
 ```
 
 11.  
 ```sql:
+select
+    PRODUCT_ID, PRODUCT_NAME, SUPP_ID
+from
+    NEW_PRODUCTS
+where
+    SUPP_ID in (
+        select SUPP_ID from SUPPLIERS
+            where SUPP_NAME in('イクミジャパン株式会社', 'クガガール商事株式会社')
+    );
 ```
 
 12.  
 ```sql:
+select
+    PRODUCT_ID, PRICE * NUM as SUM_PRICE
+from
+    SALES
+where
+    PRICE * NUM > (
+        select AVG(PRICE * NUM) from SALES
+    );
 ```
 
 13.  
 ```sql:
+select
+    STAFF_ID, STAFF_NAME, STORES.STORE_ID, STORE_NAME, ADDRESS, LOCATIONS.LOC_ID, LOC_NAME
+from
+    STAFFS inner join STORES
+on
+    STAFFS.STORE_ID = STORES.STORE_ID inner join LOCATIONS
+on
+    STORES.LOC_ID = LOCATIONS.LOC_ID;
 ```
 
 14.  
 ```sql:
+select
+    STAFFS.STAFF_ID, STAFF_NAME, PRODUCT_ID, SALES_DATE, STORES.STORE_ID, STORE_NAME, ADDRESS
+from
+    STAFFS inner join SALES
+on
+    STAFFS.STAFF_ID = SALES.STAFF_ID inner join STORES
+on
+    STAFFS.STORE_ID = STORES.STORE_ID;
 ```
 
 15.  
 ```sql:
+select
+    STORES.STORE_ID, STORE_NAME, SUM(PRICE * NUM)
+from
+    STAFFS inner join SALES
+on
+    STAFFS.STAFF_ID = STORES.STAFF_ID inner join STORES
+on
+    STAFFS.STORE_ID = STORE.STORE_ID
+group by
+    STORES.STORE_ID, STORE_NAME
 ```
 
 16.  
 ```sql:
+select
+    STORES.STORE_ID, STORE_NAME, SUM(PRICE * NUM) as ALL_SUM_PRICE
+from
+    STAFFS inner join SALES
+on
+    STAFFS.STAFF_ID = SALES.STAFF_ID inner join STORES
+on
+    STAFFS.STORE_ID = STORES.STORE_ID
+group by
+    STORES.STORE_ID, STORE_NAME
+having
+    SUM(PRICE * NUM) > 300000;
 ```
 
 17.  
 ```sql:
+select
+    PRODUCT_ID, PRODUCT_NAME
+from
+    PRODUCTS2
+where
+    PRODUCT_ID in (
+        select PRODUCT_ID from STOCK where STOCK_NUM = (
+            select MAX(STOCK_NUM) from STOCK
+        )
+    );
 ```
 
 ## 
