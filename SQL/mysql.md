@@ -258,6 +258,7 @@ group by STAFF_ID having SUM(PRICE * NUM) >= 90000;
 
 ## 応用の検索
 1. 
+内部結合`inner join`句を使用した場合、結合条件に`on`句を利用する。
 ```sql:
 select STORES.STORE_ID, STORES.STORE_NAME, LOCATIONS.LOC_ID, LOC_NAME
 from STORES inner join LOCATIONS
