@@ -236,6 +236,7 @@ order by SALES_DATE, PRICE * NUM desc;
 ```
 
 21. 
+having句は集合関数(COUNT, SUM, AVG, MAX, MIN)で処理した結果を検索条件に指定する場合に用いる。
 ```sql:
 select STAFF_ID, SUM(PRICE * NUM) from SALES
 group by STAFF_ID having SUM(PRICE * NUM) >= 80000;
