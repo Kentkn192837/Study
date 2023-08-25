@@ -20,3 +20,9 @@ SQL> SELECT name, value FROM v$sga;
 ```
 SQL> SELECT name FROM v$bgprocess;
 ```
+
+### データファイル
+- 制御ファイル
+- データファイル
+- REDOログファイル
+から構成される。
