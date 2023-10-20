@@ -111,6 +111,17 @@ VSCodeとEclipseで対応するショートカット機能を紹介する。
 </tr>
 </table>
 
+# Eclipseで使えるビルドツール
+- Ant(ビルドファイル(build.xml)をXMLで記述する。)
+- Maven(Antの後継で、Maven以降のビルドツールでは、必要なライブラリを自動で入手できるようになった。)
+- Gradle(ビルドファイルをGroovyと呼ばれるスクリプト言語で記述する。Javaの他、Android開発でも使われている。)
+
+## Antでのビルド方法
+
+## Mavenでのビルド方法
+
+## Gradleでのビルド方法
+
 # その他のTips
 ## 半角空白文字が「ᴜ」になっているのを「·」に戻す。
 `{Eclipseをダウンロードしたディレクトリ}\dropins\MergeDoc\eclipse\plugins\jp.sourceforge.mergedoc.pleiades\conf`にある`pleiades-config.xml`の次の箇所を修正する。<br>
