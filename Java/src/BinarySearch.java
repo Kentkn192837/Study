@@ -6,9 +6,9 @@ import java.util.ArrayList;
  */
 class BinarySearch {
     static int BinarySearch(ArrayList<int> array, int key) {
-        int left = 0;                    // 探索範囲の先頭のインデックス
-        int right = array.size() - 1;    // 探索範囲の末尾のインデックス
-        do {
+        int left = 0;                        // 探索範囲の先頭のインデックス
+        int right = array.size() - 1;        // 探索範囲の末尾のインデックス
+        while (left <= right) {
             int center = (left + right) / 2; // 探索範囲の中間のインデックス
             if (array[center] == key) {
                 return center;
@@ -23,7 +23,7 @@ class BinarySearch {
                 right = center - 1;
                 continue;
             }
-        } while (left <= right);
+        }
         return -1;
     }
 
