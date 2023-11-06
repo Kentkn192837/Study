@@ -55,6 +55,18 @@ class ChainHash<K, V> {
     }
 
     // 探索
+    public V search(K key) {
+        int hash = hashValue(key);      // 探索するデータのハッシュ値を取得
+        Node<K, V> p = table[hash];
+
+        while (p != null) {
+            if (p.getKey().equals(key)) {
+                return p.getValue();
+            }
+            p = p.next;
+        }
+        return null;                    // 探索失敗
+    }
     // 追加
     // 削除
 
