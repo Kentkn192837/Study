@@ -15,3 +15,16 @@ PowerShellのコマンド実行、テスト、デバッグの他、PowerShellを
 ```
 
 `test.txt`という名前の空のファイルが生成される。
+
+## オブジェクトのメンバーを調べる
+`Get-Member`コマンドレットに送られてきたオブジェクトのプロパティやメソッドを調べる。
+```
+> Get-Process | Get-Member
+```
+
+## アクセス可能なPSDriveの一覧を調べる
+```
+> Get-PSDrive
+```
+
+`Function`ドライブでは関数が保存されている。
