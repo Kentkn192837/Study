@@ -30,6 +30,10 @@ PowerShell 実行ポリシーを変更するには、`Set-ExecutionPolicy`コマ
 > Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
+`-ExecutionPolicy`には`AllSigned`, `Bypass`, `Default`, `Restricted`, `Undefined`, `RemoteSigned`,`Unrestricted`から実行ポリシーを選択して指定する。<br>
+`-Scope`は実行ポリシーを適用するユーザのスコープで、`MachinePolicy`, `UserPolicy`, `Process`,`CurrentUser`, `LocalMachine`
+
+
 ### RemoteSigned
 - Windows サーバー コンピューターに対する既定の実行ポリシー。
 - スクリプトは実行できます。
@@ -40,6 +44,12 @@ PowerShell 実行ポリシーを変更するには、`Set-ExecutionPolicy`コマ
 
 その他の実行ポリシー(`AllSigned`, `Bypass`, `Default`, `Restricted`, `Undefined`, `Unrestricted`)については、以下を参照すること。<br>
 - https://learn.microsoft.com/ja-jp/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.4#powershell-execution-policies
+
+
+## 実行ポリシーの削除
+実行ポリシーを削除すると、削除を実行したスコープのユーザの実行ポリシーは、`Undefined`に設定される。
+詳細な記述は、以下のリンクを参照。<br>
+https://learn.microsoft.com/ja-jp/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.4#remove-the-execution-policy
 
 
 # PowerShell単語
