@@ -91,5 +91,26 @@ PowerShellの変数には、ユーザー作成変数、自動変数、プリフ�
 - PowerShellの状態を示す値が保存される。PowerShellによって作成され、必要に応じてPowerShellが変更する。
 - ユーザは自動変数の値を変更することができない。
 - (例: `$PSHOME`等)
+- 自動変数の一覧についてはこちらを参照: https://learn.microsoft.com/ja-jp/powershell/module/microsoft.powershell.core/about/about_automatic_variables?view=powershell-7.4
 
-### プリファレンス変数
+### 基本設定変数
+- PowerShellの実行環境に影響を与える変数。
+- 基本設定変数の一覧についてはこちらを参照: https://learn.microsoft.com/ja-jp/powershell/module/microsoft.powershell.core/about/about_preference_variables?view=powershell-7.4
+
+### 環境変数
+- 環境変数の設定についての情報はこちらを参照: https://learn.microsoft.com/ja-jp/powershell/module/microsoft.powershell.core/about/about_environment_variables?view=powershell-7.4
+
+## PowerShellでの比較演算子
+一般的なプログラミング言語では、演算子を`==`,`!=`といった方法で記述する。
+一方、PowerShellでは、同じ意味を表す演算子を`-eq`,`-ne`と記述する。
+一般的なプログラミング言語に慣れていると一見馴染みが無い。
+そこで、今回はJavaでの比較演算子を例にして、PowerShellでの比較演算子を紹介する。
+
+|  Java  |  PowerShell  |  意味  |
+| :----  | :---- | :---- |
+|`==`| `-eq` | 2つの値が等しいかを比較(equal) |
+|`!=`| `-ne` | 2つの値が等しくないかを比較(not equal) |
+|`<`| `-lt` | 演算子の左項の値が右項の値よりも小さいかを比較(lesser than) |
+|`<=`| `-le` | 演算子の左項の値が右項の値以下かを比較(lesser than or equal to) |
+|`>`| `-gt` | 演算子の左項の値が右項の値よりも大きいかを比較(greater than) |
+|`>=`| `-ge` | 演算子の左項の値が右項の値以上かを比較(greater than or equal to) |
