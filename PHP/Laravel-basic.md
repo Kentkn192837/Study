@@ -11,6 +11,14 @@
 - [bladeを使って、テンプレートを作成する。](#bladeを使ってテンプレートを作成する)
   - [bladeテンプレートの命名規則](#bladeテンプレートの命名規則)
   - [テンプレートに値を渡す方法](#テンプレートに値を渡す方法)
+  - [データにアクセス](#データにアクセス)
+  - [DBの設定](#dbの設定)
+  - [マイグレーションファイルの生成](#マイグレーションファイルの生成)
+    - [空のマイグレーションファイルの作成](#空のマイグレーションファイルの作成)
+  - [マイグレーションファイルからテーブルを作成](#マイグレーションファイルからテーブルを作成)
+  - [マイグレーションでDBにテーブルを定義する流れのまとめ](#マイグレーションでdbにテーブルを定義する流れのまとめ)
+  - [マイグレーションファイルからModelの生成](#マイグレーションファイルからmodelの生成)
+  - [Modelの利用方法](#modelの利用方法)
 
 # Laravelの基本フォルダ- [Laravelの基本フォルダ](#laravelの基本フォルダ)
 ## /config
@@ -169,3 +177,162 @@ public function index() {
 </div>
 <!-- 略 -->
 ```
+
+
+## データにアクセス
+複数人で開発を行う場合、開発環境のDBは開発者で管理することになる。
+DBの初期テーブルの作成や、変更時に全員で同期する必要がある場合、
+DB担当者がSQLを配布することになる。
+しかし、この手順は面倒な上、作業漏れが発生する可能性があるため、
+マイグレーションを利用する。
+
+
+マイグレーションファイルからDBを作成する。
+反対に、既存のDBからマイグレーションファイルを作成することもできる。
+
+`Laravel-migrations-generator`というツールでマイグレーションファイルを自動生成することができる。
+マイグレーションツールをダウンロードするためには、以下のコマンドを実行する。
+```
+composer require --dev "kitloong/laravel-migrations-generator"
+```
+
+## DBの設定
+Laravelでは、DBへのアクセス設定は`.env`ファイルに記述されている。
+
+## マイグレーションファイルの生成
+マイグレーションファイル関連は以下の公式ドキュメントもある。
+- https://readouble.com/laravel/8.x/ja/migrations.html
+
+### 空のマイグレーションファイルの作成
+`[マイグレーションファイル名]`で指定したマイグレーションファイルを生成し、
+`--create`で生成するテーブル名を指定する。
+```
+php artisan make:migration [マイグレーションファイル名] --create=[テーブル名]
+```
+
+例えば、
+```
+php artisan make:migration create-books-table --create=books
+```
+
+とすると、`/database/migration`以下にマイグレーションファイルが生成される。
+このコマンドで生成されたマイグレーションファイルは、次のように生成される。
+```php:/database/migration/yyyy_mm_dd_tttttt_create-books-table.php
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('books', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('books');
+    }
+};
+```
+
+## マイグレーションファイルからテーブルを作成
+例えば、`books`テーブルを以下のようなカラムの設定にしたいとする。
+|  カラム名  |  型  |  備考  |
+| :----  | :---- | :---- |
+|id| int | 連番のIDで、自動採番される。 |
+|name| varchar | 書籍名 |
+|author| varchar | 著者名 |
+|overview| text | 書籍の概要 |
+
+
+この時、`up()`の処理を次のように変更する。
+```php:/database/migration/yyyy_mm_dd_tttttt_create-books-table.php
+public function up()
+{
+    Schema::create('books', function (Blueprint $table) {
+        $table->id();
+        $table->string('name', 255);
+        $table->string('author', 255);
+        $table->text('overview');
+        $table->timestamps();
+    });
+}
+```
+
+`Blueprint`が持つメソッドは、https://readouble.com/laravel/8.x/ja/migrations.html の
+`利用可能なカラムタイプ`の項目で詳細が記載されている。
+
+マイグレーションファイルからテーブルを作成するためには、次のコマンドを実行する。
+```
+php artisan migrate
+```
+
+これで、各種テーブルがDB内に生成されている。
+
+
+## マイグレーションでDBにテーブルを定義する流れのまとめ
+- phpMyadmin(http://localhost:8080/phpmyadmin)にログインし、文字コードを`utf8`で`作成したいデータべース名`でデータベースを作成する。
+- `php artisan make:migration`コマンドでマイグレーションファイルを生成する。
+- マイグレーションファイルを編集して、テーブルのカラム定義を行う。
+- `.env`ファイルにデータベースへの接続設定を記述する。
+- `php artisan migration`コマンドでマイグレーションを実施する。
+
+
+## マイグレーションファイルからModelの生成
+以下のコマンドを実行する。
+```
+php artisan make:model モデル名
+```
+
+例えば、`Book`というModelを作成したい場合は、
+```
+php artisan make:model Book
+```
+
+とすると、`/app/Models/Book.php`というファイルが自動生成される。
+生成されたModelファイルは、編集せずこのまま用いる。
+
+## Modelの利用方法
+
+```php:IndexController.php
+namespace App\Http\Controllers;
+use App\Models\Book; // 追記
+class IndexController extends Controller
+{
+    public function index() {
+        // Bookの情報を全件取得する。
+        $books = Book::all(); // 追記
+        return view('index', compact('books'));
+    }
+}
+```
+
+`compact()`では、`'books'`というキーで`$books`を連想配列にしている。
+
+次に、blade側では、次のように実装して、$booksの情報を表示する。
+```php:index.blade.php
+<div id="mainContent">
+  @foreach($books as $book)
+  {{ $book->name }}<br />
+  {{ $book->author }}<br />
+  {{ $book->overview }}<br />
+  @endforeach
+</div>
+```
+
+bladeのリファレンスは以下を参照する。
+- https://readouble.com/laravel/10.x/ja/blade.html
