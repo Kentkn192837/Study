@@ -19,6 +19,7 @@
   - [マイグレーションでDBにテーブルを定義する流れのまとめ](#マイグレーションでdbにテーブルを定義する流れのまとめ)
   - [マイグレーションファイルからModelの生成](#マイグレーションファイルからmodelの生成)
   - [Modelの利用方法](#modelの利用方法)
+- [サービスコンテナ](#サービスコンテナ)
 
 # Laravelの基本フォルダ- [Laravelの基本フォルダ](#laravelの基本フォルダ)
 ## /config
@@ -336,3 +337,9 @@ class IndexController extends Controller
 
 bladeのリファレンスは以下を参照する。
 - https://readouble.com/laravel/10.x/ja/blade.html
+
+
+# サービスコンテナ
+サービスコンテナにクラスを登録するためには、ServiceProviderに登録するクラスの情報を
+記述する必要がる。
+`*ServiceProvider`クラスは自作することもでき、`php artisan`で生成できる。
