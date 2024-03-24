@@ -178,3 +178,7 @@ IMG_VER=v1.0
 `${DHUB_USER}/c5env:${IMG_VER}`の部分が、`superuser110/c5env:v1.0`と解釈される。
 
 `.env`ファイルは、開発者個人が個々に持てるように、`.gitignore`でバージョン管理から外しておくのが、一般的な運用である。
+
+
+## docker-composeとCI/CDを構築する
+`Jenkins`, `circleCI`などのパイプラインツールを使う。
