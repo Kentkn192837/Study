@@ -78,29 +78,29 @@ CMD ["/startapp"]
 以下のような`docker-compose.yml`を例にすると、
 ```docker-compose.yml:
 services:
-    mysql:
-        image: mysql:5.7.28
-        volumes:
-        - mysql_volume:/var/lib/mysql
-        networks:
-        - wp_net
-        ...
+  mysql:
+    image: mysql:5.7.28
+    volumes:
+    - mysql_volume:/var/lib/mysql
+    networks:
+    - wp_net
+    ...
 
-    nodejs:
-        image: nodejs
-        networks:
-        - wp_net
-        depends_on: mysql
-        ...
-        ...
+  nodejs:
+    image: nodejs
+    networks:
+    - wp_net
+    depends_on: mysql
+    ...
+    ...
 
 networks:
-    wp_net:
-        driver: bridge
+  wp_net:
+    driver: bridge
 
 volumes:
-    mysql_volume:
-        driver: local
+  mysql_volume:
+    driver: local
 ```
 
 `mysql`コンテナが立ち上がってから`nodejs`コンテナを立ち上げるという処理が為される。
@@ -138,6 +138,7 @@ volumes:
 ```
 
 頻繁に使うコマンドはシェルスクリプトにしたり、`Makefile`にしたりすると便利。
+(`Makefile`はインデントをタブにしなければならない)
 ```Makefile:
 SHELL=/bin/bash
 
