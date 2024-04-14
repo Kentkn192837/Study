@@ -182,3 +182,5 @@ IMG_VER=v1.0
 
 ## docker-composeとCI/CDを構築する
 `Jenkins`, `circleCI`などのパイプラインツールを使う。
+GitLabなら、`gitlab-ci.yml`を使って実現できる。
+- https://gitlab-docs.creationline.com/ee/ci/cloud_deployment/
