@@ -43,3 +43,41 @@ SELECT * FROM emp
 
 `VERIFY`というSQL*Plusシステム変数を使うと、置換変数をデフォルトで使用した時の「旧...」「新...」という表示を
 ON, OFFで制御できる。
+
+# NULLS FIRST, LASTによるNULLの表示位置のソート
+`ORDER BY`句に`NULLS FIRST`または`NULLS LAST`を指定すると、NULLの表示位置を制御できる。
+- `NULLS FIRST`でNULLを先頭に表示する。
+- `NULLS LAST`でNULLを末尾に表示する。
+```sql
+SELECT
+  ename, sal, comm_pct
+FROM
+  emp
+ORDER BY
+  comm_pct
+DESC NULLS FIRST;
+```
+
+
+# DROP TABLEによる表の削除
+## ごみ箱からのフラッシュバックドロップ
+Oracleには「ごみ箱」という機能があり、削除した表はごみ箱に入る。
+ごみ箱から表を復元することをフラッシュバックドロップという。
+
+```sql
+FLASHBACK TABLE <表名> TO BEFORE DROP;
+```
+
+ごみ箱に入った削除済みの表は、単に表に対して「削除済み」というマークが付けられているだけで、
+元々表が格納されていた表領域には存在する。
+
+
+ごみ箱に移さずにテーブルを消すには、`PURGE`を使う。
+```sql
+DROP TABLE <表名> PURGE;
+```
+
+ドロップしたい表が外部キー制約で参照されている場合は、`CASCADE CONSTRAINTS`を使う必要がある。
+```sql
+DROP TABLE <表名> CASCADE CONSTRAINTS PURGE;
+```
