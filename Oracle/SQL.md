@@ -9,8 +9,10 @@
 |NUMBER|NUMBER型で指定できる最大の精度|
 
 
-# DESCRIBEコマンド
-# DUAL表
+# DDL
+## SELECT
+### DESCRIBEコマンド
+### DUAL表
 カラムが`DUMMY`列のみで、データを1行だけ持つ表。
 
 ```sql
@@ -24,15 +26,15 @@ SELECT 365 * 5 FROM DUAL;
 SELECT ROUND(1.4) FROM DUAL;
 ```
 
-# ORDER BYによるNULLの表示制御
+### ORDER BYによるNULLの表示制御
 
-# 置換変数
+### 置換変数
 - 対話的指定: `&empno`
 - 値を保持したい時は二重アンパサンドを使う: `&&empno`
 
 二重アンパサンドを使うと、一度指定した置換変数の値への入力を再度求められなくなる。同じ値が使いまわされるようになる。
 
-# DEFINEコマンド
+### DEFINEコマンド
 `DEFINE`コマンドを使うと、SQL実行前にあらかじめ置換変数の値を設定しておくことができる。
 ```sql
 DEFINE empno = 1001;
@@ -44,7 +46,7 @@ SELECT * FROM emp
 `VERIFY`というSQL*Plusシステム変数を使うと、置換変数をデフォルトで使用した時の「旧...」「新...」という表示を
 ON, OFFで制御できる。
 
-# NULLS FIRST, LASTによるNULLの表示位置のソート
+### NULLS FIRST, LASTによるNULLの表示位置のソート
 `ORDER BY`句に`NULLS FIRST`または`NULLS LAST`を指定すると、NULLの表示位置を制御できる。
 - `NULLS FIRST`でNULLを先頭に表示する。
 - `NULLS LAST`でNULLを末尾に表示する。
@@ -57,6 +59,27 @@ ORDER BY
   comm_pct
 DESC NULLS FIRST;
 ```
+
+## SEQUENCE
+### シーケンスから連番を取り出す
+```sql
+<シーケンス名>.NEXTVAL --シーケンスから連番を取り出す
+<シーケンス名>.CURRVAL --振り出された連番を確認する
+```
+
+### シーケンスの一覧を取得
+```sql
+SELECT * FROM ALL_SEQUENCE; --ユーザーがアクセスできるシーケンスを取得する
+SELECT * FROM DBA_SEQUENCE; --データベース内のシーケンスを取得する
+SELECT * FROM USER_SEQUENCE; --ユーザーが所有するシーケンスを取得する
+```
+`LAST_NUMBER`が次に`NEXTVAL`を実行したときに採番される数値。
+
+### シーケンスの書き換え
+```sql
+ALTER SEQUENCE <シーケンス名> RESTART START WITH 100; --指定したシーケンスを指定した数値から開始する。
+```
+## SYNONYM
 
 
 # DROP TABLEによる表の削除
