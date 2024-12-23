@@ -104,3 +104,24 @@ DROP TABLE <表名> PURGE;
 ```sql
 DROP TABLE <表名> CASCADE CONSTRAINTS PURGE;
 ```
+
+
+# DML
+## ユーザーに付与されている権限の確認
+```sql
+SELECT * FROM user_sys_privs; --データベースに接続しているユーザー自身に直接付与された権限
+SELECT * FROM session_privs;
+SELECT * FROM dba_sys_privs; --すべてのユーザーの情報を確認できるが、SELECT ANY TABLE権限を持ったユーザーであることが必要
+SELECT * FROM role_sys_privs;
+SELECT * FROM session_roles;
+SELECT * FROM dba_role_privs;
+SELECT * FROM user_tab_privs;
+SELECT * FROM dba_data_files;
+SELECT * FROM dba_free_space; --現行のユーザーがアクセスできる表領域内の使用可能な範囲
+```
+
+
+
+# 参考サイト
+#### Oracle管理者のためのSQLリファレンス
+- https://atmarkit.itmedia.co.jp/fdb/ref/ref_oracle.html
