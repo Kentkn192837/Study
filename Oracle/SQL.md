@@ -121,6 +121,54 @@ SELECT * FROM dba_free_space; --現行のユーザーがアクセスできる表
 ```
 
 
+# Oracleでのデータバックアップ  Oracle Data Pump
+Data Pumpを使用するには、ダンプファイルの入出力先となるOSのディレクトリに対応するディレクトリオブジェクトをあらかじめ作成しておく必要がある。
+
+## ディレクトリオブジェクトの作成
+```
+CREATE [OR REPLACE] DIRECTORY <ディレクトリ名> AS '<対応するOSのディレクトリのパス>';
+```
+
+```sql
+-- 実行例
+CREATE OR REPLACE DIRECTORY dmp_dir AS '/u01/work/oracle_dmp_dir';
+```
+
+## 各モードでのエクスポート/インポート
+```sql
+--表モードでのエクスポート/インポート
+expdp scott/tiger DUMPFILE=dmp_dir:expdat.dmp TABLS=emp,dept --接続ユーザーが所有する表のエクスポート
+impdp scott/tiger DUMPFILE=dmp_dir:expdat.dmp TABLS=emp,dept --接続ユーザーが所有する表のインポート
+expdp system/manager DUMPFILE=dmp_dir:expdat.dmp TABLS=scott.emp,blake.dept --他のユーザーが所有する表のエクスポート
+impdp system/manager DUMPFILE=dmp_dir:expdat.dmp TABLS=scott.emp,blake.dept --他のユーザーが所有する表のインポート
+
+--スキーマモードでのエクスポート/インポート
+expdp scott/tiger SCHEMAS=scott DUMPFILE=dmp_dir:expdat.dmp --指定したスキーマが所有するすべてのオブジェクトをエクスポート
+impdp scott/tiger SCHEMAS=scott DUMPFILE=dmp_dir:expdat.dmp --指定したスキーマが所有するすべてのオブジェクトをインポート
+
+--表領域モードでのエクスポート/インポート
+expdp scott/tiger TABLESPACE=tbs9 DUMPFILE=dmp_dir:dump_tbs9.dmp --指定した表領域に格納されているすべてのオブジェクトをエクスポート
+impdp scott/tiger TABLESPACE=tbs9 DUMPFILE=dmp_dir:dump_tbs9.dmp --指定した表領域に格納されているすべてのオブジェクトをインポート
+
+--全体モードのエクスポート/インポート
+expdp scott/tiger FULL=y DUMPFILE=<ディレクトリ名>:<ファイル名> --データベース全体をエクスポートする。
+impdp scott/tiger FULL=y DUMPFILE=<ディレクトリ名>:<ファイル名> --データベース全体をインポートする。
+
+--トランスポート表領域モード
+```
+
+パラメーターファイルを用意して、expdp,impdpのパラメータを指定することもできる
+```exp.par
+SCHEMAS=user01
+DIRECTORY=dmp_dir
+DUMPFILE=expdat.dmp
+LOGFILE=dmp.log
+TABLE_EXISTS_ACTION=append
+```
+
+```
+expdp scott/tiger PARFILE=exp.par
+```
 
 # 参考サイト
 #### Oracle管理者のためのSQLリファレンス
