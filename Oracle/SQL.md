@@ -20,7 +20,10 @@
   - [ユーザーに付与されている権限の確認](#ユーザーに付与されている権限の確認)
 - [Oracleでのデータバックアップ  Oracle Data Pump](#oracleでのデータバックアップ--oracle-data-pump)
   - [ディレクトリオブジェクトの作成](#ディレクトリオブジェクトの作成)
+  - [ディレクトリオブジェクトの確認](#ディレクトリオブジェクトの確認)
   - [各モードでのエクスポート/インポート](#各モードでのエクスポートインポート)
+- [RDS for Oracle DBインスタンスの管理](#rds-for-oracle-dbインスタンスの管理)
+  - [Amazon S3 バケットからOracle DBインスタンスにファイルをダウンロードする](#amazon-s3-バケットからoracle-dbインスタンスにファイルをダウンロードする)
 - [参考サイト](#参考サイト)
       - [Oracle管理者のためのSQLリファレンス](#oracle管理者のためのsqlリファレンス)
 
@@ -173,6 +176,12 @@ CREATE [OR REPLACE] DIRECTORY <ディレクトリ名> AS '<対応するOSのデ�
 CREATE OR REPLACE DIRECTORY dmp_dir AS '/u01/work/oracle_dmp_dir';
 ```
 
+## ディレクトリオブジェクトの確認
+Oracleのディレクトリ状態を確認するには、`DBA_DIRECTORIES`を参照します。
+```sql
+SELECT * FROM DBA_DIRECTORIES;
+```
+
 ## 各モードでのエクスポート/インポート
 ```sql
 --表モードでのエクスポート/インポート
@@ -208,6 +217,20 @@ TABLE_EXISTS_ACTION=append
 ```
 expdp scott/tiger PARFILE=exp.par
 ```
+
+
+# RDS for Oracle DBインスタンスの管理
+RDS for Oracle DBインスタンスとAmazon S3バケット間でファイルを転送するには、Amazon RDSパッケージ`rdsadmin_s3_tasks`という
+専用のプロシージャを使用する。
+
+アップロード時に`GZIP`でファイルを圧縮し、ダウンロード時に解凍することができる。
+- https://docs.aws.amazon.com/ja_jp/AmazonRDS/latest/UserGuide/oracle-s3-integration.using.html
+
+
+## Amazon S3 バケットからOracle DBインスタンスにファイルをダウンロードする
+`rdsadmin.rdsadmin_s3_tasks.download_from_s3`を使用する。
+- https://xp-cloud.jp/blog/2017/05/11/1614/
+- https://qiita.com/billtench/items/ac998ffe6e7887a4a8a7
 
 # 参考サイト
 #### Oracle管理者のためのSQLリファレンス
