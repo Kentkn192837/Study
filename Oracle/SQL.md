@@ -141,9 +141,14 @@ SELECT * FROM dba_sys_privs; --すべてのユーザーの情報を確認でき�
 SELECT * FROM role_sys_privs;
 SELECT * FROM session_roles;
 SELECT * FROM dba_role_privs;
-SELECT * FROM user_tab_privs;
+SELECT * FROM user_tab_privs; --ユーザーが所有している権限の確認
 SELECT * FROM dba_data_files;
 SELECT * FROM dba_free_space; --現行のユーザーがアクセスできる表領域内の使用可能な範囲
+```
+
+```sql
+-- 指定したスキーマへの権限付与の例
+grant read, write on directory DATA_DIR to MY_SCHEMA_01;
 ```
 
 
