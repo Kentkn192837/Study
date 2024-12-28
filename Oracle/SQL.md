@@ -8,6 +8,7 @@
     - [置換変数](#置換変数)
     - [DEFINEコマンド](#defineコマンド)
     - [NULLS FIRST, LASTによるNULLの表示位置のソート](#nulls-first-lastによるnullの表示位置のソート)
+- [Index](#index)
   - [SEQUENCE](#sequence)
     - [シーケンスから連番を取り出す](#シーケンスから連番を取り出す)
     - [シーケンスの一覧を取得](#シーケンスの一覧を取得)
@@ -84,6 +85,13 @@ FROM
 ORDER BY
   comm_pct
 DESC NULLS FIRST;
+```
+
+
+# Index
+Indexの一覧を表示
+```sql
+SELECT * FROM user_indexes;
 ```
 
 ## SEQUENCE
