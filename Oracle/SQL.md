@@ -226,6 +226,7 @@ impdp scott/tiger FULL=y DUMPFILE=<ディレクトリ名>:<ファイル名> --�
 
 パラメーターファイルを用意して、expdp,impdpのパラメータを指定することもできる
 ```exp.par
+--exp.par
 SCHEMAS=user01
 DIRECTORY=dmp_dir
 DUMPFILE=expdat.dmp
