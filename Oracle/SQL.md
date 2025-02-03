@@ -296,23 +296,15 @@ Oracleには、5種類の制約を設定できる。
 # 表領域の表示
 表領域は、「データディクショナリビュー」と「動的パフォーマンスビュー」から確認できる。
 
-| ビュー名        | 説明                                                                                                            |
-| --------------- | --------------------------------------------------------------------------------------------------------------- |
-| DBA_TABLESPACES | データベースに存在する表領域の一覧のビュー                                                                      |
-| DBA_DATA_FILES  | 表領域を構成するデータファイルの一覧のビュー                                                                    |
-| DBA_FREE_SPACE  | データファイルの空き領域に関する情報のビュー                                                                    |
-| V$TABLESPACE    | データベースに存在する表領域の一覧のビュー。データベースがOPENでなくても、MOUNTされていれば結果を参照できる。   |
-| V$DATAFILE      | 表領域を構成するデータファイルの一覧のビュー。データベースがOPENでなくても、MOUNTされていれば結果を参照できる。 |
-
-
-
 ```sql
-SELECT * FROM DBA_TABLESPACES;
-SELECT * FROM DBA_DATA_FILES;
-SELECT * FROM DBA_FREE_SPACE;
-SELECT * FROM V$TABLESPACE;
-SELECT * FROM V$DATAFILE;
+SELECT * FROM DBA_TABLESPACES;  --表領域の情報を確認できる
+SELECT * FROM DBA_DATA_FILES;   --データファイルの情報を確認できる
+SELECT * FROM DBA_FREE_SPACE;   --データファイルの空き領域の情報を確認できる
+SELECT * FROM V$TABLESPACE;     --表領域の情報を確認できる
+SELECT * FROM V$DATAFILE;       --データファイルの情報を確認できる
 ```
+
+ビューはデータベースが`OPEN`状態でなくとも、データベースがMOUNTさえされていれば参照することができる。
 
 # 表領域の作成
 ## 永続表領域
@@ -320,3 +312,14 @@ SELECT * FROM V$DATAFILE;
 ## 一時表領域
 
 # 表領域の拡張
+表領域は`データファイルをリサイズする`, `表領域にしいデータファイルを追加する`のいずれかの方法で拡張できる。
+
+```sql
+--データファイルのリサイズで表領域を拡張する場合
+ALTER DATABASE
+  DATAFILE '/u01/app/oracle/mytbs01.dbf' RESIZE 200M;
+
+--データファイルの追加して表領域を拡張する場合
+ALTER TABLESPACE mytbs
+  ADD DATAFILE '/u01/app/oracle/mytbs01.dbf' SIZE 100M;
+```
