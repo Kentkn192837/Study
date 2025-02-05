@@ -34,9 +34,6 @@
 - [表領域](#表領域)
 - [表領域の表示](#表領域の表示)
 - [表領域の作成](#表領域の作成)
-  - [永続表領域](#永続表領域)
-  - [UNDO表領域](#undo表領域)
-  - [一時表領域](#一時表領域)
 - [表領域の拡張](#表領域の拡張)
 
 
@@ -308,9 +305,35 @@ SELECT * FROM V$DATAFILE;       --データファイルの情報を確認でき�
 動的パフォーマンスビューはデータベースが`OPEN`状態でなくとも、データベースがMOUNTさえされていれば参照することができる。
 
 # 表領域の作成
-## 永続表領域
-## UNDO表領域
-## 一時表領域
+```sql
+-- 2つのデータファイルで1つの永続表領域を作成する例
+-- 表領域名: mytbs
+-- DATAFILE: ファイルパス
+-- SIZE: 初期サイズ
+-- AUTOEXTEND: 自動拡張
+CREATE TABLESPACE mytbs
+  DATAFILE '/u01/app/oracle/mytbs01.dbf'
+  SIZE 100M
+  AUTOEXTEND OFF,
+  '/u01/app/oracle/mytbs02.dbf'
+  SIZE 200M
+  AUTOEXTEND ON;
+-- smallfile表領域は、複数のデータファイルで構成することができるが、
+-- データファイル数が膨大になるデメリットがある。
+
+
+-- UNDO表領域作成例
+CREATE UNDO TABLESPACE undotbs2
+  DATAFILE '/u01/app/oracle/undotbs2.dbf' SIZE 100M;
+
+-- 一時表領域作成例
+CREATE TEMPORARY TABLESPACE temp2
+  TEMPFILE '/u01/app/oracle/temp2.dbf' SIZE 100M;
+
+-- bigfile表領域
+CREATE BIGFILE TABLESPACE bigtbs
+  DATAFILE '/u01/app/oracle/bigtbs.dbf' SIZE 50G;
+```
 
 # 表領域の拡張
 表領域は`データファイルをリサイズする`, `表領域にしいデータファイルを追加する`のいずれかの方法で拡張できる。
