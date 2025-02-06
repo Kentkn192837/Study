@@ -246,6 +246,20 @@ TABLE_EXISTS_ACTION=append
 expdp scott/tiger PARFILE=exp.par
 ```
 
+# SQL*Loader
+外部表(`.csv`など)からOracleの表にデータをインポートするための機能。
+外部表にはアクセスドライバとして、`ORACLE_LOADER`, `ORACLE_DATAPUMP`の2つがある。
+
+- 使用する時は、`sqlldr`というコマンドを実行する。
+- `control`パラメータに制御ファイルを指定して、どんなファイルからデータを読み取るのか、どのようにデータを扱うのかの定義を記述して使う。
+
+```bash
+sqlldr user1/pass1 control='sample.ctl'
+```
+
+```sample.ctl
+LOAD DATA
+```
 
 # RDS for Oracle DBインスタンスの管理
 RDS for Oracle DBインスタンスとAmazon S3バケット間でファイルを転送するには、Amazon RDSパッケージ`rdsadmin_s3_tasks`という
