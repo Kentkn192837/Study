@@ -1,5 +1,3 @@
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
-
 class Super {
     static String x = "Super : x";
     String y = "Super : y";
