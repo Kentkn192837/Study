@@ -22,3 +22,10 @@ java --module-path . --module com.seshop.sample/com.seshop.sample.main.Main
 | `--describe-module`        | モジュール記述子の情報を参照する。                                                                                                                |
 | `--show-module-resolution` | モジュール解決の様子を出力する。                                                                                                                  |
 | `--list-modules`           | モジュールのリストを一覧で表示する。                                                                                                              |
+
+### jdepsコマンド
+モジュールの依存関係を調べるコマンド。
+```bash
+# 実行例
+jdeps myapp.jar
+```
