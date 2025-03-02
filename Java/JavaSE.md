@@ -88,7 +88,32 @@ public class Main {
         var c = null; // varにnullは代入できないのでコンパイルエラー
         var d = {10, 20}; //varを使用した配列の初期化では明示的に型を指定しなければならないのでコンパイルエラー
     }
+
+    public void y(var a) { // varは仮引数に指定できないのでコンパイルエラー
+        //
+    }
+}
+```
+
+OKなパターンは下の4パターン
+```java
+public class Main {
+    public void x() {
+        var ary1 = new int[]{1, 2, 3};
+        var ary2 = new int[3];
+        var a = 10;
+        final var b = 20;
+    }
 }
 ```
 
 ## 配列を初期化して宣言するときは、要素数は省略する。
+## 配列で初期化しなかった場合のデフォルト初期値
+配列の要素を初期化しなかった場合、デフォルトの初期値が割り当てられる。
+| 型                                     | 初期値 |
+| -------------------------------------- | ------ |
+| `int[]`, `byte[]`, `long[]`, `short[]` | 0      |
+| `float[]`, `double[]`                  | 0.0    |
+| `char[]`                               | \u0000 |
+| `boolean[]`                            | false  |
+| `String[]`, その他参照型[]             | null   |
