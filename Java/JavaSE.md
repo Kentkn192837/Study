@@ -125,3 +125,13 @@ char→int は暗黙型変換となる。
 
 ## switch文の式に使用できるデータ型
 ## switch文の式で指定されている型とcase式の型が合わないとコンパイルエラーとなる。
+
+## ラムダ式 OKの記述パターンまとめ
+```java
+(String str) -> { return "Hello" + str; };  // 基本形
+(str) -> { return "Hello" + str; };         // 引数の型名は省略できる
+str -> { return "Hello" + str; };           // 引数が一つの時は()を省略できる
+str -> return "Hello" + str;                // 右辺の処理が1行の時は、{}を省略できる
+str -> "Hello" + str;                       // {}が省略できるとき、returnも省略できる
+() -> "Hello" + str;                        // 引数が無いときは、空っぽの()で書く
+```
