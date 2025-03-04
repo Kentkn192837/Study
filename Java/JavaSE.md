@@ -117,3 +117,11 @@ public class Main {
 | `char[]`                               | \u0000 |
 | `boolean[]`                            | false  |
 | `String[]`, その他参照型[]             | null   |
+
+## 暗黙型変換のルール
+char→int は暗黙型変換となる。
+
+## floatとint, longとintの比較
+
+## switch文の式に使用できるデータ型
+## switch文の式で指定されている型とcase式の型が合わないとコンパイルエラーとなる。
