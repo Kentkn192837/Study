@@ -118,13 +118,29 @@ public class Main {
 | `boolean[]`                            | false  |
 | `String[]`, その他参照型[]             | null   |
 
-## 暗黙型変換のルール
-char→int は暗黙型変換となる。
 
-## floatとint, longとintの比較
+## 演算前の暗黙型変換5パターン
+```
+(double) + (double, float, long, int, short, char, byte)    →右辺はdouble型に変換されてから演算される。
+(float)  + (float, long, int, short, char, byte)            →右辺はfloat型に変換されてから演算される。
+(long)  + (long, int, short, char, byte)                    →右辺はlong型に変換されてから演算される。
+(int, short, char, byte) + (int, short, char, byte)         →両辺はint型に変換されてから演算される。
+(short, char, byte) + (short, char, byte)                   →これも両辺がint型に変換されてから演算される。
+```
+※だからchar→int は暗黙型変換となる。
 
 ## switch文の式に使用できるデータ型
+| switch文の式に使える型 |
+| ---------------------- |
+| `char`, `Character`    |
+| `byte`, `Byte`         |
+| `short`, `Short`       |
+| `int`, `Integer`       |
+| `enum`                 |
+| `String`               |
+
 ## switch文の式で指定されている型とcase式の型が合わないとコンパイルエラーとなる。
+## switch文の式の結果がnullの時は、コンパイルは通るがNullPointerExceptionとなる。
 ## continue文が使えるのは、繰り返し文(for,while)の{}の中だけ。
 したがって次のような使い方はできない。
 ```java
