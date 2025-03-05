@@ -125,6 +125,21 @@ char→int は暗黙型変換となる。
 
 ## switch文の式に使用できるデータ型
 ## switch文の式で指定されている型とcase式の型が合わないとコンパイルエラーとなる。
+## continue文が使えるのは、繰り返し文(for,while)の{}の中だけ。
+したがって次のような使い方はできない。
+```java
+public class Main {
+    public static void main(String[] args) {
+        int i = 2;
+        Outer:
+        if (i < 5) {
+            System.out.println("i: " + i);
+            i++;
+            continue Outer; // 繰り返し文の中でないのでコンパイルエラー
+        }
+    }
+}
+```
 
 ## ラムダ式 OKの記述パターンまとめ
 ```java
