@@ -16,6 +16,37 @@
 ### DISTINCTをEXISTSで代用する
 ### インデックスを利用する時は、列は裸
 ### 中間テーブルを減らすように工夫する
+副問い合わせで中間テーブルを作成してデータを取得するようなSQLは、集約関数+`HAVING`句を使って、
+中間テーブルを使わないように工夫することを考えること。<br>
+集約した結果に対する条件は、`HAVING`句を使うのが鉄則。
+```sql
+-- before
+SELECT
+    * 
+FROM
+    ( 
+        SELECT
+            sale_data
+            , MAX(quantity) AS max_qty 
+        FROM
+            SalesHistory 
+        GROUP BY
+            sale_date
+    ) TMP -- 無駄な中間テーブル
+WHERE
+    max_qty >= 10;
+
+-- after
+SELECT
+    sale_data
+    , MAX(quantity) 
+FROM
+    SalesHistory 
+GROUP BY
+    sale_date 
+HAVING
+    MAX(quantity) >= 10;
+```
 
 ## SQLの実行順序
 `FROM`→`WHERE`→`GROUP BY`→`HAVING`→`SELECT`→`ORDER BY`
