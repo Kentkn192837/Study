@@ -7,6 +7,7 @@
     - [DISTINCTをEXISTSで代用する](#distinctをexistsで代用する)
     - [インデックスを利用する時は、列は裸](#インデックスを利用する時は列は裸)
     - [中間テーブルを減らすように工夫する](#中間テーブルを減らすように工夫する)
+    - [極力、集約よりも結合を使うこと](#極力集約よりも結合を使うこと)
   - [SQLの実行順序](#sqlの実行順序)
 
 ## SQLを高速化する手法
@@ -19,6 +20,8 @@
 副問い合わせで中間テーブルを作成してデータを取得するようなSQLは、集約関数+`HAVING`句を使って、
 中間テーブルを使わないように工夫することを考えること。<br>
 集約した結果に対する条件は、`HAVING`句を使うのが鉄則。
+なぜなら、`HAVING`句は、集約を行いながら並行して動作するので、中間テーブルの作成後に実行される`WHERE`句よりも効率的であるから。<br>
+`FROM`→`WHERE`→`GROUP BY`→`HAVING`→`SELECT`(→`ORDER BY`)
 ```sql
 -- before
 SELECT
@@ -26,7 +29,7 @@ SELECT
 FROM
     ( 
         SELECT
-            sale_data
+            sale_date
             , MAX(quantity) AS max_qty 
         FROM
             SalesHistory 
@@ -38,7 +41,7 @@ WHERE
 
 -- after
 SELECT
-    sale_data
+    sale_date
     , MAX(quantity) 
 FROM
     SalesHistory 
@@ -47,6 +50,8 @@ GROUP BY
 HAVING
     MAX(quantity) >= 10;
 ```
+
+### 極力、集約よりも結合を使うこと
 
 ## SQLの実行順序
 `FROM`→`WHERE`→`GROUP BY`→`HAVING`→`SELECT`→`ORDER BY`
