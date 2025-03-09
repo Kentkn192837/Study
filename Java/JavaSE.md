@@ -162,6 +162,10 @@ public class Main {
 ```
 ※だからchar→int は暗黙型変換となる。
 
+## Stringクラスの文字列操作は、処理結果を戻り値で受け取る。
+## StringBuilderの文字列操作は、オブジェクトの値が直接書き換わる。
+## StringBuilder sb.delete(2, 5) とすると、削除されるのは2番目の要素から4番目の要素。
+## += で文字列の結合はできるが、-=で文字列を消せるということは無い。
 ## switch文の式には、double, float, longは使えません。
 逆に使えるのは以下の型です。
 | switch文の式に使える型 |
