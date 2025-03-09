@@ -162,7 +162,8 @@ public class Main {
 ```
 ※だからchar→int は暗黙型変換となる。
 
-## switch文の式に使用できるデータ型
+## switch文の式には、double, float, longは使えません。
+逆に使えるのは以下の型です。
 | switch文の式に使える型 |
 | ---------------------- |
 | `char`, `Character`    |
