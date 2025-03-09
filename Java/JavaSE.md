@@ -76,6 +76,39 @@ jdeps myapp.jar
 実は識別子に`var`, `open`, `module`, `requires`, `transitive`, `exports`, `opens`, `to`, `uses`, `provides`, `with`が使える。
 
 
+# staticイニシャライザ
+`.class`が読み込まれたタイミングで実行されるため、インスタンス化されるよりも先に実行される。
+```java
+class Test {
+    static {
+        System.out.println("Testクラス：static イニシャライザ");
+    }
+
+    Test() {
+        System.out.println("Testクラス：コンストラクタ");
+    }
+}
+
+public class Main {
+    static {
+        System.out.println("Mainクラス：static イニシャライザ");
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Mainクラス：main()メソッド");
+        Test obj = new Test();
+    }
+}
+```
+
+```
+# 実行結果
+Mainクラス：static イニシャライザ
+Mainクラス：main()メソッド
+Testクラス：static イニシャライザ
+Testクラス：コンストラクタ
+```
+
 # 要注意！落とし穴リスト
 ## varはローカル変数にしか使用できない。
 ## varは初期値を指定しなければならない。nullはダメ
@@ -156,6 +189,8 @@ public class Main {
     }
 }
 ```
+
+## オーバーロード時の注意①: 戻り値の型が違うだけではオーバーロードとならない。
 
 ## ラムダ式 OKの記述パターンまとめ
 ```java
