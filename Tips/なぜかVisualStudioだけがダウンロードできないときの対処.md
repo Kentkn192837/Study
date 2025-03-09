@@ -1,0 +1,2 @@
+なぜかVisualStudioだけダウンロード出来ない奇病を発症してたPCがあったので C:\Windows\System32\drivers\etc\hosts 見てみたらvisualstudioだけ専用のIPが指定されてて、その先が死んでたので該当行を消してPC再起動したら直りました。
+https://x.com/izm/status/1898592925338218566
