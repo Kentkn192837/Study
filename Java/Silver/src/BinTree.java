@@ -48,6 +48,7 @@ class BinTree<K, V> {
      */
     private Node<K, V> root;
     private Comparator<? super K> comparator = null;
+
     public BinTree() {
         root = null;
     }
@@ -58,8 +59,8 @@ class BinTree<K, V> {
     }
 
     private int comp(K key1, K key2) {
-        return (comparator == null) ? ((Comparable<K>)key1).compareTo(key2)
-                                    : comparator.compare(key1, key2);
+        return (comparator == null) ? ((Comparable<K>) key1).compareTo(key2)
+                : comparator.compare(key1, key2);
     }
 
     /**
@@ -71,21 +72,23 @@ class BinTree<K, V> {
 
         while (true) {
             // ノードが存在せず、探索失敗
-            if (p == null) return null;
+            if (p == null)
+                return null;
 
             // keyの値とpのキー値を比較する
             int cond = comp(key, p.getKey());
 
             // key == p.getKey() のとき
-            if (cond == 0) return p.getValue(); // 探索成功
-            
+            if (cond == 0)
+                return p.getValue(); // 探索成功
+
             // key < p.getKey() のとき
             if (cond < 0) {
                 // 左側のノードを辿る
                 p = p.left;
                 continue;
             }
-            
+
             // key > p.getKey() のとき右側のノードを辿る
             if (cond > 0) {
                 p = p.right;

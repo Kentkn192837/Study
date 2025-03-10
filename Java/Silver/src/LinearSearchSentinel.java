@@ -1,15 +1,20 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 /**
  * 線形探索(LinearSearch)のプログラム
- * ランダムな並びの配列から探索を行う時に用いる。
+ * 番兵法により、繰返し終了判定を削減する。
+ * 探索するキーの値と同じ値を配列の末尾に追加する。
  */
-class LinearSearch {
-    static int LinearSearch(int[] a, int n, int key) {
-        for (int i = 0; i < n; i++) {
-            if (a[i] == key) return i;
+class LinearSearchSentinel {
+    static int linearSearch(ArrayList<Integer> a, int n, int key) {
+        a.add(key);
+        int i;
+        for (i = 0; i < a.size(); i++) {
+            if (a.get(i) == key)
+                break;
         }
-        return -1;
+        return i == n ? -1 : i;
     }
 
     public static void main(String[] args) {
@@ -17,11 +22,11 @@ class LinearSearch {
 
         System.out.println("要素数:");
         final int num = sc.nextInt();
-        int[] array = new int[num];
+        ArrayList<Integer> array = new ArrayList<>();
 
         for (int i = 0; i < num; i++) {
             System.out.print("array[" + i + "]:");
-            array[i] = sc.nextInt();
+            array.add(sc.nextInt());
         }
 
         while (true) {
@@ -29,7 +34,7 @@ class LinearSearch {
             int key = sc.nextInt();
 
             // 探索開始
-            int idx = LinearSearch(array, num, key);
+            int idx = linearSearch(array, num, key);
 
             if (idx == -1) {
                 System.out.println("その値の要素は存在しません。");
