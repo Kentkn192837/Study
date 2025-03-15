@@ -7,10 +7,6 @@ public class Main {
         ResultSet rs = null;
         String sql = "SELECT dept_code, dept_name FROM department";
         try {
-            // JDBCドライバを明示的にロード
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            // localhostではなく、mysqlサービス名を使用
             String url = "jdbc:mysql://mysql:3306/testdb?verifyServerCertificate=false&useSSL=false&serverTimezone=JST";
             con = DriverManager.getConnection(url, "user", "password");
             pstmt = con.prepareStatement(sql);
@@ -19,8 +15,6 @@ public class Main {
                 System.out.println("dept_code:" + rs.getInt(1));
                 System.out.println("dept_name:" + rs.getString(2));
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
