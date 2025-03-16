@@ -13,6 +13,7 @@
 ```sql
 DESCRIBE <テーブル名>;
 DESCRIBE INVENTORY;
+DESC INVENTORY;
 ```
 
 ## `''`で囲った文字列の内部で、単なる文字列としてシングルクォートを使いたい場合の対処
