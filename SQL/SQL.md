@@ -51,6 +51,29 @@ HAVING
     MAX(quantity) >= 10;
 ```
 
+```sql
+-- before
+SELECT
+    ename
+    , sal 
+FROM
+    emp 
+WHERE
+    sal > (SELECT AVG(sal) FROM emp);
+
+-- after
+SELECT
+    ename
+    , sal 
+FROM
+    emp 
+GROUP BY
+    ename
+    , sal 
+HAVING
+    sal > AVG(sal);
+```
+
 ### 極力、集約よりも結合を使うこと
 
 ## SQLの実行順序
