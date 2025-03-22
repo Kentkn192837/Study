@@ -21,6 +21,7 @@
 - [DROP TABLEによる表の削除](#drop-tableによる表の削除)
   - [ごみ箱からのフラッシュバックドロップ](#ごみ箱からのフラッシュバックドロップ)
 - [DML](#dml)
+  - [MERGE文](#merge文)
   - [ユーザーに付与されている権限の確認](#ユーザーに付与されている権限の確認)
 - [Oracleでのデータバックアップ  Oracle Data Pump](#oracleでのデータバックアップ--oracle-data-pump)
   - [ディレクトリオブジェクトの作成](#ディレクトリオブジェクトの作成)
@@ -184,6 +185,46 @@ DROP TABLE <表名> CASCADE CONSTRAINTS PURGE;
 
 
 # DML
+## MERGE文
+指定した表から行を取得し、その行にもとづいて別の表の行を更新または追加できる。
+```sql
+MERGE 
+INTO cust_copy c  -- 更新したい表
+    USING ( 
+        SELECT
+            id
+            , UPPER(name)
+            , name
+            , active 
+        FROM
+            customers
+    ) p -- ここでSELECTしたデータで、更新したい表のデータをUPDATEまたはINSERTする。
+        ON (c.id = p.id) WHEN MATCHED THEN UPDATE 
+SET
+    c.name = p.name
+    , c.active = p.active WHEN NOT MATCHED THEN 
+INSERT (c.id, c.name, c.active) -- データを更新するカラムを指定
+VALUES (p.id, p.name, p.active);
+
+
+MERGE 
+INTO cust_copy c  -- 更新したい表
+    USING ( -- DUAL表を駆使することで狙った値で書き換えることに使える。
+        SELECT
+            '0000A' AS id
+            , 'Tom' AS name
+            , '1' AS active 
+        FROM
+            DUAL
+    ) p -- ここでSELECTしたデータで、更新したい表のデータをUPDATEまたはINSERTする。
+        ON (c.id = p.id) WHEN MATCHED THEN UPDATE 
+SET
+    c.name = p.name
+    , c.active = p.active WHEN NOT MATCHED THEN 
+INSERT (c.id, c.name, c.active) -- データを更新するカラムを指定する（省略可）
+VALUES (p.id, p.name, p.active);
+```
+
 ## ユーザーに付与されている権限の確認
 ```sql
 SELECT * FROM user_sys_privs; --データベースに接続しているユーザー自身に直接付与された権限
