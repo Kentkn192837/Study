@@ -71,10 +71,28 @@ java --module-path . --module com.seshop.sample/com.seshop.sample.main.Main
 | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `-cp`, `-classpath`        | classファイルやjarファイルと一緒に実行する時に、classやjarのあるパスを指定して使う。                                                              |
 | `-p`, `--module-path`      | アプリケーションやモジュールを検索する位置を指定する。フルパスで指定するのが有効。可読性を上げるため、`--module-path`を使うことも推奨されている。 |
-| `-m`, `--module`           | モジュール名とエントリーポイントとなるクラス(mainクラス)を指定する。`パッケージ名/実行するモジュールクラス名`                                     |
+| `-m`, `--module`           | プログラムを実行する時に、モジュール名とエントリーポイントとなるクラス(mainクラス)を指定する。`モジュール名/実行するパッケージ名`                 |
 | `--describe-module`        | モジュール記述子の情報を参照する。                                                                                                                |
 | `--show-module-resolution` | モジュール解決の様子を出力する。                                                                                                                  |
 | `--list-modules`           | モジュールのリストを一覧で表示する。                                                                                                              |
+
+```bash
+# 利用例
+javac Main.java
+java -cp .:/usr/src/mysql-connector-java-8.0.12.jar Main
+
+javac -p ../ -d . module-info.java Main.java
+java -p ".:../" -m com.seshop.sample/com.seshop.sample.main.Main
+```
+
+```java
+// module-info.javaの例
+module com.seshop.liba {
+    requires com.seshop.libc;
+    // exports宣言をすることで、module-info.javaで定義したモジュールをexport先でimportすることができる。
+    exports com.seshop.sample.firstpkg;
+}
+```
 
 ### jdepsコマンド
 モジュールの依存関係を調べるコマンド。
