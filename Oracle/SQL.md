@@ -7,7 +7,7 @@
     - [DESCRIBEコマンド](#describeコマンド)
     - [DUAL表](#dual表)
     - [ORDER BYによるNULLの表示制御](#order-byによるnullの表示制御)
-    - [置換変数](#置換変数)
+    - [置換変数(`&`, `&&`)](#置換変数-)
     - [DEFINEコマンド](#defineコマンド)
     - [NULLS FIRST, LASTによるNULLの表示位置のソート](#nulls-first-lastによるnullの表示位置のソート)
 - [Index](#index)
@@ -82,9 +82,9 @@ SELECT ROUND(1.4) FROM DUAL;
 
 ### ORDER BYによるNULLの表示制御
 
-### 置換変数
-- 対話的指定: `&empno`
-- 値を保持したい時は二重アンパサンドを使う: `&&empno`
+### 置換変数(`&`, `&&`)
+- `&empno`が呼ばれる度に値の入力を求められる。: `&empno`
+- `&&empno`が呼ばれるのは一度だけで、最初に入力した値が使いまわされる。: `&&empno`
 
 二重アンパサンドを使うと、一度指定した置換変数の値への入力を再度求められなくなる。同じ値が使いまわされるようになる。
 
