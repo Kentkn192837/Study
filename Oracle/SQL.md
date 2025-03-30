@@ -38,6 +38,7 @@
 - [表領域の表示](#表領域の表示)
 - [表領域の作成](#表領域の作成)
 - [表領域の拡張](#表領域の拡張)
+- [オプティマイザ統計の取得](#オプティマイザ統計の取得)
 
 
 # データ型
@@ -415,4 +416,17 @@ ALTER DATABASE
 --データファイルの追加して表領域を拡張する場合
 ALTER TABLESPACE mytbs
   ADD DATAFILE '/u01/app/oracle/mytbs01.dbf' SIZE 100M;
+```
+
+
+# オプティマイザ統計の取得
+オプティマイザ統計は、手動もしくは自動で収集することができる。<br>
+
+```sql
+-- 手動で収集する場合のPL/SQLプロシージャ
+EXECUTE DBMS_STATS.GATHER_DATABASE_STATS();
+EXECUTE DBMS_STATS.GATHER_SCHEMA_STATS();
+EXECUTE DBMS_STATS.GATHER_TABLE_STATS();
+EXECUTE DBMS_STATS.GATHER_INDEX_STATS();
+EXECUTE DBMS_STATS.GATHER_SYSTEM_STATS();
 ```
