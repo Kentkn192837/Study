@@ -1,0 +1,55 @@
+# Oracle初期化パラメータファイル (init.ora)
+
+# データベース名
+db_name = ORCL
+
+# 制御ファイルのパス
+control_files = ('/u01/app/oracle/oradata/ORCL/control01.ctl',
+                 '/u01/app/oracle/oradata/ORCL/control02.ctl')
+
+# SGAのサイズ設定
+sga_target = 1G
+sga_max_size = 2G
+
+# PGAのサイズ設定
+pga_aggregate_target = 500M
+
+# プロセス数の最大値
+processes = 300
+
+# データベースブロックサイズ
+db_block_size = 8192
+
+# REDOログバッファのサイズ
+log_buffer = 16M
+
+# UNDO表領域の設定
+undo_tablespace = undotbs1
+undo_retention = 900
+
+# キャラクタセット
+nls_language = 'AMERICAN'
+nls_territory = 'AMERICA'
+nls_characterset = 'AL32UTF8'
+
+# アーカイブモードの設定
+log_archive_dest_1 = 'LOCATION=/u01/app/oracle/archivelog'
+log_archive_format = 'ARC%S_%R.%T'
+
+# データベースの診断ファイルの場所
+diagnostic_dest = '/u01/app/oracle'
+
+# リスナーの設定
+local_listener = '(ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))'
+
+# パラレル実行の設定
+parallel_max_servers = 80
+
+# セッションキャッシュカーソルの数
+session_cached_cursors = 50
+
+# データベースのタイムゾーン
+db_time_zone = '+00:00'
+
+# TEMP表領域の設定
+db_create_file_dest = '/u01/app/oracle/oradata'
