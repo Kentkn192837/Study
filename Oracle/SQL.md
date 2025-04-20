@@ -28,6 +28,7 @@
   - [ディレクトリオブジェクトの作成](#ディレクトリオブジェクトの作成)
   - [ディレクトリオブジェクトの確認](#ディレクトリオブジェクトの確認)
   - [各モードでのエクスポート/インポート](#各モードでのエクスポートインポート)
+- [SQL\*Loader](#sqlloader)
 - [RDS for Oracle DBインスタンスの管理](#rds-for-oracle-dbインスタンスの管理)
   - [Amazon S3 バケットからOracle DBインスタンスにファイルをダウンロードする](#amazon-s3-バケットからoracle-dbインスタンスにファイルをダウンロードする)
 - [参考サイト](#参考サイト)
@@ -39,6 +40,9 @@
 - [表領域の表示](#表領域の表示)
 - [表領域の作成](#表領域の作成)
 - [表領域の拡張](#表領域の拡張)
+- [表領域を一時的に使用不可にする](#表領域を一時的に使用不可にする)
+- [データファイルの移動](#データファイルの移動)
+- [表領域の削除](#表領域の削除)
 - [オプティマイザ統計の取得](#オプティマイザ統計の取得)
 
 
@@ -104,7 +108,12 @@ SELECT * FROM emp
 ```
 
 `VERIFY`というSQL*Plusシステム変数を使うと、置換変数をデフォルトで使用した時の「旧...」「新...」という表示を
-ON, OFFで制御できる。
+ON, OFFで制御できる。<br>
+`VERIFY`は、SQL*PlusとSQL Developerで使用できる。
+```sql
+SET VERIFY ON;    -- 置換前後のSQLの表示がON
+SET VERIFY OFF;   -- 置換前後のSQLの表示がOFF
+```
 
 ### NULLS FIRST, LASTによるNULLの表示位置のソート
 `ORDER BY`句に`NULLS FIRST`または`NULLS LAST`を指定すると、NULLの表示位置を制御できる。
@@ -392,6 +401,7 @@ CREATE TABLESPACE mytbs
   AUTOEXTEND OFF,
   '/u01/app/oracle/mytbs02.dbf'
   SIZE 200M
+  SEGMENT SPACE MANAGEMENT AUTO     -- セグメント領域管理方式を自動にする (MANUALを指定すると手動管理方式となる)
   AUTOEXTEND ON;
 -- smallfile表領域は、複数のデータファイルで構成することができるが、
 -- データファイル数が膨大になるデメリットがある。
@@ -422,6 +432,15 @@ ALTER DATABASE
 ALTER TABLESPACE mytbs
   ADD DATAFILE '/u01/app/oracle/mytbs01.dbf' SIZE 100M;
 ```
+
+# 表領域を一時的に使用不可にする
+```sql
+ALTER INDEX <索引名> UNUSABLE;    -- 指定したインデックスが参照しているセグメントが削除され、インデックスが使用不可になる。
+ALTER INDEX <索引名> REBUILD;     -- 指定したインデックスが再び利用できるようになり、使用可能になる。
+```
+
+# データファイルの移動
+# 表領域の削除
 
 
 # オプティマイザ統計の取得
