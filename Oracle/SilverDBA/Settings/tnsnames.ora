@@ -1,0 +1,16 @@
+# 接続先Oracleデータベース情報を記述して、クライアントに配置して使う
+# デフォルトでは<ORCLE_HOME>/network/admin/tnsnames.oraに配置される。
+# 通常はOracle Net Managerなどのツールを使って編集する。（構文ミスをしないため）
+
+ORCL =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = db.oracle.com)(PORT = 1521))
+      (ADDRESS = (PROTOCOL = TCP)(HOST = db.oracle.com)(PORT = 1522))
+      (LOAD_BALANCE = yes)
+    )
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = orcl.world)
+    )
+  )

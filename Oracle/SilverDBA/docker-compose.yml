@@ -10,6 +10,7 @@ services:
       - ORACLE_PWD=oracle123
       - ORACLE_CHARACTERSET=AL32UTF8
     volumes:
+    - ./Settings/listener.ora:/opt/oracle/product/21c/dbhome_1/network/admin/listener.ora
       - oracle-data:/opt/oracle/oradata
       - ./init-scripts:/opt/oracle/scripts/startup
     healthcheck:
