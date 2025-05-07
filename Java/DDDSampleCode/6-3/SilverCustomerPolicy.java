@@ -1,7 +1,7 @@
 class SliverCustomerPolicy {
     private final ExcellentCustomerPolicy policy;
 
-    GoldCustomerPolicy() {
+    SilverCustomerPolicy() {
         policy = new ExcellentCustomerPolicy();
         policy.add(new PurchaseFrequencyRule());
         policy.add(new ReturnRateRule());

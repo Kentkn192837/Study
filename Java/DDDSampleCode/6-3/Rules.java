@@ -1,4 +1,4 @@
-class GoldCustomerPurchaseAmountRule implements ExcellentCustomerRule {
+class GoldCustomerPurchaseAmountRule implements ExcellentCustomerRuleIF {
     /**
      * ゴールド会員の購入金額ルール
      * これまでの購入金額が100,000円以上であること
@@ -9,7 +9,7 @@ class GoldCustomerPurchaseAmountRule implements ExcellentCustomerRule {
     }
 }
 
-class PurchaseFrequencyRule implements ExcellentCustomerRule {
+class PurchaseFrequencyRule implements ExcellentCustomerRuleIF {
     /**
      * 購入頻度ルール
      * これまでの購入の頻度が一ヶ月あたり10回以上であること
@@ -20,7 +20,7 @@ class PurchaseFrequencyRule implements ExcellentCustomerRule {
     }
 }
 
-class ReturnRateRule implements ExcellentCustomerRule {
+class ReturnRateRule implements ExcellentCustomerRuleIF {
     /**
      * 返品率ルール
      * 返品率が0.1%以内であること

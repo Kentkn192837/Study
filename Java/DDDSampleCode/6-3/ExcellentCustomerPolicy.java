@@ -2,7 +2,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 class ExcellentCustomerPolicy implements CustomerPolicy {
-    private final Set<ExcellentCustomerRule> rules;
+    private final Set<ExcellentCustomerRuleIF> rules;
 
     public ExcellentCustomerPolicy() {
         rules = new HashSet<>();
@@ -13,7 +13,7 @@ class ExcellentCustomerPolicy implements CustomerPolicy {
      * 
      * @param rule ルール
      */
-    void add(final ExcellentCustomerRule rule) {
+    void add(final ExcellentCustomerRuleIF rule) {
         rules.add(rule);
     }
 
@@ -22,7 +22,7 @@ class ExcellentCustomerPolicy implements CustomerPolicy {
      * @return ルールをすべて満たす場合はtrue
      */
     boolean complyWithAll(final PurchaseHistory history) {
-        for (ExcellentCustomerRule each : rules) {
+        for (ExcellentCustomerRuleIF each : rules) {
             if (!each.ok(history)) {
                 return false;
             }
