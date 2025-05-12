@@ -216,6 +216,8 @@ public class Main {
 ```
 
 ## 配列を初期化して宣言するときは、要素数は省略する。
+TODO: 基本データ型の配列を宣言する時にOKなパターンについてまとめる。
+
 ## 配列で初期化しなかった場合のデフォルト初期値
 配列の要素を初期化しなかった場合、デフォルトの初期値が割り当てられる。
 | 型                                     | 初期値 |
@@ -242,7 +244,7 @@ public class Main {
 ## StringBuilder sb.delete(2, 5) とすると、削除されるのは2番目の要素から4番目の要素。
 ## += で文字列の結合はできるが、-=で文字列を消せるということは無い。
 ## switch文の式には、double, float, longは使えません。
-逆に使えるのは以下の型です。
+逆に使えるのは以下の型です。case式に使えない型を指定するとコンパイルエラー。式の結果がnullだとNullPointerExceptionです。
 | switch文の式に使える型 |
 | ---------------------- |
 | `char`, `Character`    |
@@ -251,6 +253,26 @@ public class Main {
 | `int`, `Integer`       |
 | `enum`                 |
 | `String`               |
+
+```java
+final int num = 10;
+int val = 20;
+int data = 30;
+switch (val) {
+    case num:
+        System.out.print("A "); break;
+    case 10*2:
+        System.out.print("B "); break;
+    case data: // 変数dataはfinalを指定していない。定数ではないのでコンパイルエラー。
+        System.out.print("C "); break;
+    case "40": // switch(val)のvalの型と合っていないとコンパイルエラー。"40"で文字列を指定してしまっているのでエラー
+        System.out.print("D "); break;
+}
+```
+■見直しポイント
+- switch(val)の式の型とcaseに指定する定数の型を合わせることを覚える
+- `case 〇〇`の「〇〇」に指定できるのは、**定数**か、**finalを指定した**変数
+- 定数がnullの時はNullPointerExceptionで実行時エラーとなる。
 
 ## switch文の式で指定されている型とcase式の型が合わないとコンパイルエラーとなる。
 ## switch文の式の結果がnullの時は、コンパイルは通るがNullPointerExceptionとなる。
