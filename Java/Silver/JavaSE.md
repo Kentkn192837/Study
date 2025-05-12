@@ -194,6 +194,7 @@ public class Main {
         var b; // 初期値を指定していないのでコンパイルエラー
         var c = null; // varにnullは代入できないのでコンパイルエラー
         var d = {10, 20}; //varを使用した配列の初期化では明示的に型を指定しなければならないのでコンパイルエラー
+        var e = new ArrayList<String>(); // インスタンス変数にvarを使うのもダメ✕
     }
 
     public void y(var a) { // varは仮引数に指定できないのでコンパイルエラー
