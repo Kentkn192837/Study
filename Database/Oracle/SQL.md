@@ -11,6 +11,9 @@
     - [置換変数(`&`, `&&`) SQL\*Plus, SQL Developerのみで使える](#置換変数--sqlplus-sql-developerのみで使える)
     - [DEFINEコマンド](#defineコマンド)
     - [NULLS FIRST, LASTによるNULLの表示位置のソート](#nulls-first-lastによるnullの表示位置のソート)
+    - [集合演算(複合問い合わせ)](#集合演算複合問い合わせ)
+  - [CREATE TABLE文](#create-table文)
+    - [CTASでWHERE 1=0 のような常にFALSEになる条件を指定している理由](#ctasでwhere-10-のような常にfalseになる条件を指定している理由)
 - [Index](#index)
   - [SEQUENCE](#sequence)
     - [シーケンスから連番を取り出す](#シーケンスから連番を取り出す)
@@ -135,6 +138,28 @@ ORDER BY
   comm_pct
 DESC NULLS FIRST;
 ```
+
+### 集合演算(複合問い合わせ)
+集合演算(`UNION`, `MINUS`, `INTERSECT`)では、戻される表の最初の列の昇順でソートされる。<br>
+列が不足している問い合わせにはダミー列として`NULL`やデータ型が一致するリテラル(定数)を指定すると、エラーを回避できる。
+```sql:
+select N, S from t1
+union
+select I, NULL from t2;
+
+select N, S from t1
+union
+select I, 'NONE' from t3
+  order by I; -- order by は文の最後にのみ指定できる
+```
+
+## CREATE TABLE文
+### CTASでWHERE 1=0 のような常にFALSEになる条件を指定している理由
+```sql
+CREATE TABLE emp_copy2
+  AS SELECT empno, ename, sal FROM emp WHERE 1=0;
+```
+常にFALSEになる条件を指定すると、行はコピーされずに空のテーブルを作ることができる。
 
 
 # Index
