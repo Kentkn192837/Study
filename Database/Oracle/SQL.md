@@ -8,7 +8,7 @@
     - [DESCRIBEコマンド](#describeコマンド)
     - [DUAL表](#dual表)
     - [ORDER BYによるNULLの表示制御](#order-byによるnullの表示制御)
-    - [置換変数(`&`, `&&`)](#置換変数-)
+    - [置換変数(`&`, `&&`) SQL\*Plus, SQL Developerのみで使える](#置換変数--sqlplus-sql-developerのみで使える)
     - [DEFINEコマンド](#defineコマンド)
     - [NULLS FIRST, LASTによるNULLの表示位置のソート](#nulls-first-lastによるnullの表示位置のソート)
 - [Index](#index)
@@ -92,11 +92,19 @@ SELECT ROUND(1.4) FROM DUAL;
 
 ### ORDER BYによるNULLの表示制御
 
-### 置換変数(`&`, `&&`)
+### 置換変数(`&`, `&&`) SQL*Plus, SQL Developerのみで使える
+
 - `&empno`が呼ばれる度に値の入力を求められる。: `&empno`
 - `&&empno`が呼ばれるのは一度だけで、最初に入力した値が使いまわされる。: `&&empno`
 
-二重アンパサンドを使うと、一度指定した置換変数の値への入力を再度求められなくなる。同じ値が使いまわされるようになる。
+二重アンパサンドを使うと、一度指定した置換変数の値への入力を再度求められなくなる。同じ値が使いまわされるようになる。<br>
+同じ名前の変数を複数個所で定義しているときは、`&&`とするとラク。
+```sql
+-- 2行目の&&col_nameで定義した値が、4行目でも使われる
+SELECT ename, &&col_name FROM emp
+  WHERE job = 'SALESMAN'
+  ORDER BY &&col_name
+```
 
 ### DEFINEコマンド
 `DEFINE`コマンドを使うと、SQL実行前にあらかじめ置換変数の値を設定しておくことができる。
