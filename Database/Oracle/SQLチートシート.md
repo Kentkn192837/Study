@@ -64,3 +64,33 @@ select NULLIF(in, check) from dual;
 -- in1～inNの中で、最初にNULLではない値が見つかったら、その値を返す
 select COALESCE(in1, in2, in3, ..., inN) from dual;
 ```
+
+# 複数列を比較対象にする副問い合わせ
+```sql:
+select
+    empno
+    , ename
+    , job
+    , sal 
+from
+    emp 
+where
+    (job, sal) = (select job, sal from emp where empno = 1001);
+```
+
+## これを応用してUPDATEすることもできる
+```sql:
+update emp 
+set
+    (sal, comm_pct) = ( 
+        select
+            sal
+            , comm_pct 
+        from
+            emp 
+        where
+            empno = 1001
+    ) 
+where
+    empno = 1006;
+```
