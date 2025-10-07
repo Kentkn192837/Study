@@ -19,7 +19,7 @@ sudo gitlab-runner register \
   --non-interactive \
   --url $GITLAB_SERVER_URL \
   --token "$RUNNER_AUTH_TOKEN" \
-  --exectutor "shell" \
+  --executor "shell" \
   --description "shell-executor-rhel"
 ```
 
