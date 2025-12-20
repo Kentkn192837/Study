@@ -31,6 +31,26 @@
     - [DROP TABLESPACE mytbs INCLUDING CONTENTS AND DATAFILES; (表領域と一緒にオブジェクトとデータファイルを削除する)](#drop-tablespace-mytbs-including-contents-and-datafiles-表領域と一緒にオブジェクトとデータファイルを削除する)
     - [OMF管理とは、データベースファイル管理をOracleで自動化する機能で、データファイル名が自動で決まる。不要なデータファイルは削除される。](#omf管理とはデータベースファイル管理をoracleで自動化する機能でデータファイル名が自動で決まる不要なデータファイルは削除される)
     - [DB\_CREATE\_FILE\_DEST, DB\_CREATE\_ONLINE\_LOG\_DEST\_n, DB\_RECOVERY\_FILE\_DEST ⇒OMF管理に関する問題ですよ。ということ。](#db_create_file_dest-db_create_online_log_dest_n-db_recovery_file_dest-omf管理に関する問題ですよということ)
+  - [7章 表領域](#7章-表領域)
+    - [ローカル管理方式でできること⇒エクステント割り当ての自動化](#ローカル管理方式でできることエクステント割り当ての自動化)
+    - [自動セグメント領域管理⇒SEGMENT MANAGEMENT AUTO句を指定すると自動セグメント領域管理方式が使用できる。](#自動セグメント領域管理segment-management-auto句を指定すると自動セグメント領域管理方式が使用できる)
+    - [再開可能文4選⇒(1)一時表領域を使うSELECT文,(2)DML,(3)ロード系処理(Data Pump,SQL\*Loader),(4)DDL:create table as select等](#再開可能文4選1一時表領域を使うselect文2dml3ロード系処理data-pumpsqlloader4ddlcreate-table-as-select等)
+    - [再開可能領域割当てが動作する状況](#再開可能領域割当てが動作する状況)
+    - [再開可能領域割り当ての機能を使うためには⇒RESUMABLE\_TIMEOUT初期化パラメータを設定する](#再開可能領域割り当ての機能を使うためにはresumable_timeout初期化パラメータを設定する)
+    - [ALTER TABLE SHRINK SPACE（セグメント縮小）するためには、行移動を有効化(ENABLE ROW MOVEMENT)すること。](#alter-table-shrink-spaceセグメント縮小するためには行移動を有効化enable-row-movementすること)
+    - [ALTER TABLE SHRINK SPACE文でセグメントを縮小して、HWMの位置を変更できる。](#alter-table-shrink-space文でセグメントを縮小してhwmの位置を変更できる)
+    - [ALTER TABLE emp SHRINK SPACE; ⇒セグメント内データの再編成（片側に寄せる処理）セグメントの縮小+HWMの引き下げ](#alter-table-emp-shrink-space-セグメント内データの再編成片側に寄せる処理セグメントの縮小hwmの引き下げ)
+    - [ALTER TABLE emp SHRINK SPACE COMPACT; ⇒片側に寄せる処理+HWMの引き下げ⇒COMPACTは、片側に寄せる処理コンパクトにする処理だけを実行するということ。](#alter-table-emp-shrink-space-compact-片側に寄せる処理hwmの引き下げcompactは片側に寄せる処理コンパクトにする処理だけを実行するということ)
+    - [ALTER TABLE emp SHRINK SPACE CASCADE; ⇒片側に寄せる処理+セグメントの縮小+HWMの引き下げ+索引にも縮小処理をする。](#alter-table-emp-shrink-space-cascade-片側に寄せる処理セグメントの縮小hwmの引き下げ索引にも縮小処理をする)
+    - [ALTER INDEX ... SHRINK SPACE \[...\]; ⇒を使えば、索引だけピンポイントで縮小処理をすることもできる。](#alter-index--shrink-space--を使えば索引だけピンポイントで縮小処理をすることもできる)
+    - [TRUNCATE TABLEを実行すると、全行削除するだけではなく、エクステントを解放するかどうかについても制御できる。](#truncate-tableを実行すると全行削除するだけではなくエクステントを解放するかどうかについても制御できる)
+    - [TRUNCATE TABLE tbl01; --デフォルトではDROP STORAGEと同じ](#truncate-table-tbl01---デフォルトではdrop-storageと同じ)
+    - [TRUNCATE TABLE tbl01 DROP STORAGE; 表の作成後に追加で作成されたエクステントを解放する。](#truncate-table-tbl01-drop-storage-表の作成後に追加で作成されたエクステントを解放する)
+    - [TRUNCATE TABLE tbl01 DROP ALL STORAGE; すべてのエクステントを解放する。](#truncate-table-tbl01-drop-all-storage-すべてのエクステントを解放する)
+    - [TRUNCATE TABLE tbl01 REUSE STORAGE; エクステントを解放せずに使い続ける。](#truncate-table-tbl01-reuse-storage-エクステントを解放せずに使い続ける)
+    - [セグメント縮小⇒ALTER TABLE ... SHRINK SPACE \[COMPACT\] \[CASCADE\]](#セグメント縮小alter-table--shrink-space-compact-cascade)
+    - [TRUNCATE TABLE ... ⇒エクステントの解放](#truncate-table--エクステントの解放)
+    - [表圧縮⇒ROW STORE COMPRESS BASIC, ROW STORE COMPRESS, COMPRESS, ROW STORE COMPRESS ADVANCEDのこと。](#表圧縮row-store-compress-basic-row-store-compress-compress-row-store-compress-advancedのこと)
   - [LIKEで指定する検索条件: `_`: 任意の一文字, `%`: 任意の文字列](#likeで指定する検索条件-_-任意の一文字--任意の文字列)
   - [ORDER BYで昇順で並べ替えた時、NULLは末尾、降順の時はNULLは先頭になる。](#order-byで昇順で並べ替えた時nullは末尾降順の時はnullは先頭になる)
   - [置換変数`&`と`&&`の挙動の違い](#置換変数との挙動の違い)
@@ -104,6 +124,47 @@ UNLIMITED TABLESPACEシステム権限が付与されたユーザはすべての
 ### DROP TABLESPACE mytbs INCLUDING CONTENTS AND DATAFILES; (表領域と一緒にオブジェクトとデータファイルを削除する)
 ### OMF管理とは、データベースファイル管理をOracleで自動化する機能で、データファイル名が自動で決まる。不要なデータファイルは削除される。
 ### DB_CREATE_FILE_DEST, DB_CREATE_ONLINE_LOG_DEST_n, DB_RECOVERY_FILE_DEST ⇒OMF管理に関する問題ですよ。ということ。
+
+## 7章 表領域
+### ローカル管理方式でできること⇒エクステント割り当ての自動化
+### 自動セグメント領域管理⇒SEGMENT MANAGEMENT AUTO句を指定すると自動セグメント領域管理方式が使用できる。
+```sql:
+CREATE TABLESPACE tbs_auto
+  DATAFILE '/u01/oradata/tbs_auto01.dbf' SIZE 100M
+  SEGMENT MANAGEMENT AUTO; /* 自動セグメント領域管理方式「AUTO」（手動管理にしたい時は「MANUAL」を指定する） */
+```
+
+### 再開可能文4選⇒(1)一時表領域を使うSELECT文,(2)DML,(3)ロード系処理(Data Pump,SQL*Loader),(4)DDL:create table as select等
+なお、再開可能文が一時停止すると、
+・エラーがアラートログに記録される。<br>
+・ユーザーがAFTER SUSPENDイベントに対してトリガーを登録していた場合は、そのトリガーが実行される。<br>
+
+### 再開可能領域割当てが動作する状況
+・領域不足<br>
+・クオータ割り当て超過（ユーザーの領域割り当て上限の超過）<br>
+・セグメントが最大エクステント数に到達⇒ストレージに十分空きがあっても再開可能割り当てが発生することがありますよ。ということ。<br>
+
+### 再開可能領域割り当ての機能を使うためには⇒RESUMABLE_TIMEOUT初期化パラメータを設定する
+なお、セッションレベルで初期化パラメータを変更しても利用可能になる。
+```sql:
+ALTER SESSION ENABLE RESUMABLE TIMEOUT 100; /* 100秒間処理を一時停止する */
+```
+
+### ALTER TABLE SHRINK SPACE（セグメント縮小）するためには、行移動を有効化(ENABLE ROW MOVEMENT)すること。
+`ALTER TABLE emp ENABLE ROW MOVEMENT;`
+### ALTER TABLE SHRINK SPACE文でセグメントを縮小して、HWMの位置を変更できる。
+### ALTER TABLE emp SHRINK SPACE; ⇒セグメント内データの再編成（片側に寄せる処理）セグメントの縮小+HWMの引き下げ
+### ALTER TABLE emp SHRINK SPACE COMPACT; ⇒片側に寄せる処理+HWMの引き下げ⇒COMPACTは、片側に寄せる処理コンパクトにする処理だけを実行するということ。
+### ALTER TABLE emp SHRINK SPACE CASCADE; ⇒片側に寄せる処理+セグメントの縮小+HWMの引き下げ+索引にも縮小処理をする。
+### ALTER INDEX ... SHRINK SPACE [...]; ⇒を使えば、索引だけピンポイントで縮小処理をすることもできる。
+### TRUNCATE TABLEを実行すると、全行削除するだけではなく、エクステントを解放するかどうかについても制御できる。
+### TRUNCATE TABLE tbl01; --デフォルトではDROP STORAGEと同じ
+### TRUNCATE TABLE tbl01 DROP STORAGE; 表の作成後に追加で作成されたエクステントを解放する。
+### TRUNCATE TABLE tbl01 DROP ALL STORAGE; すべてのエクステントを解放する。
+### TRUNCATE TABLE tbl01 REUSE STORAGE; エクステントを解放せずに使い続ける。
+### セグメント縮小⇒ALTER TABLE ... SHRINK SPACE [COMPACT] [CASCADE]
+### TRUNCATE TABLE ... ⇒エクステントの解放
+### 表圧縮⇒ROW STORE COMPRESS BASIC, ROW STORE COMPRESS, COMPRESS, ROW STORE COMPRESS ADVANCEDのこと。
 
 ## LIKEで指定する検索条件: `_`: 任意の一文字, `%`: 任意の文字列
 ## ORDER BYで昇順で並べ替えた時、NULLは末尾、降順の時はNULLは先頭になる。
