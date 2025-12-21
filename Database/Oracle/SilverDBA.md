@@ -51,6 +51,12 @@
     - [セグメント縮小⇒ALTER TABLE ... SHRINK SPACE \[COMPACT\] \[CASCADE\]](#セグメント縮小alter-table--shrink-space-compact-cascade)
     - [TRUNCATE TABLE ... ⇒エクステントの解放](#truncate-table--エクステントの解放)
     - [表圧縮⇒ROW STORE COMPRESS BASIC, ROW STORE COMPRESS, COMPRESS, ROW STORE COMPRESS ADVANCEDのこと。](#表圧縮row-store-compress-basic-row-store-compress-compress-row-store-compress-advancedのこと)
+  - [8章 UNDO表領域](#8章-undo表領域)
+    - [UNDO⇒過去データが必要な処理（読取り一貫性の保証, ロールバック, 多重化できない, フラッシュバック機能）](#undo過去データが必要な処理読取り一貫性の保証-ロールバック-多重化できない-フラッシュバック機能)
+    - [REDO⇒障害からの復旧時の再実行で使われる（ロールフォワード, 多重化できる）](#redo障害からの復旧時の再実行で使われるロールフォワード-多重化できる)
+    - [一つのデータベースに複数のUNDO表領域を作ることはできるが、使用できるUNDO表領域は1つだけ。](#一つのデータベースに複数のundo表領域を作ることはできるが使用できるundo表領域は1つだけ)
+    - [UNDOセグメントの所有者はPUBLIC](#undoセグメントの所有者はpublic)
+    - [1. UNDO\_MANAGEMENT初期化パラメータをAUTOにする 2.CREATE UNDO TABLESPACE文でUNDO表領域を作成する 3. UNDO\_TABLESPACE初期化パラメータにUNDO表領域の名前を設定する。](#1-undo_management初期化パラメータをautoにする-2create-undo-tablespace文でundo表領域を作成する-3-undo_tablespace初期化パラメータにundo表領域の名前を設定する)
   - [LIKEで指定する検索条件: `_`: 任意の一文字, `%`: 任意の文字列](#likeで指定する検索条件-_-任意の一文字--任意の文字列)
   - [ORDER BYで昇順で並べ替えた時、NULLは末尾、降順の時はNULLは先頭になる。](#order-byで昇順で並べ替えた時nullは末尾降順の時はnullは先頭になる)
   - [置換変数`&`と`&&`の挙動の違い](#置換変数との挙動の違い)
@@ -165,6 +171,13 @@ ALTER SESSION ENABLE RESUMABLE TIMEOUT 100; /* 100秒間処理を一時停止す
 ### セグメント縮小⇒ALTER TABLE ... SHRINK SPACE [COMPACT] [CASCADE]
 ### TRUNCATE TABLE ... ⇒エクステントの解放
 ### 表圧縮⇒ROW STORE COMPRESS BASIC, ROW STORE COMPRESS, COMPRESS, ROW STORE COMPRESS ADVANCEDのこと。
+
+## 8章 UNDO表領域
+### UNDO⇒過去データが必要な処理（読取り一貫性の保証, ロールバック, 多重化できない, フラッシュバック機能）
+### REDO⇒障害からの復旧時の再実行で使われる（ロールフォワード, 多重化できる）
+### 一つのデータベースに複数のUNDO表領域を作ることはできるが、使用できるUNDO表領域は1つだけ。
+### UNDOセグメントの所有者はPUBLIC
+### 1. UNDO_MANAGEMENT初期化パラメータをAUTOにする 2.CREATE UNDO TABLESPACE文でUNDO表領域を作成する 3. UNDO_TABLESPACE初期化パラメータにUNDO表領域の名前を設定する。
 
 ## LIKEで指定する検索条件: `_`: 任意の一文字, `%`: 任意の文字列
 ## ORDER BYで昇順で並べ替えた時、NULLは末尾、降順の時はNULLは先頭になる。
