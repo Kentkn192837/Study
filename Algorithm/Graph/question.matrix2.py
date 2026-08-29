@@ -21,6 +21,7 @@ for i in range(N):
         continue
     # セルが0で、かつ未訪問の場合、BFSを開始する
     connected_graph_size = 0
+    min_y, max_y, min_x, max_x = H, 0, W, 0
 
     que = deque([i])
     while que:
@@ -30,7 +31,12 @@ for i in range(N):
         visited[current] = True
         connected_graph_size += 1
         current_y, current_x = current // W, current % W
-
+        min_y, max_y, min_x, max_x = (
+            min(min_y, current_y),
+            max(max_y, current_y),
+            min(min_x, current_x),
+            max(max_x, current_x),
+        )
         for j in range(4):
             next_y, next_x = current_y + dy[j], current_x + dx[j]
             next_idx = next_y * W + next_x
@@ -44,5 +50,7 @@ for i in range(N):
                 continue
             # 探索したセルが範囲内でかつ未探索の場合、次の探索対象としてキューに追加する
             que.append(next_idx)
+
+    if 0 < min_y and max_y < H - 1 and 0 < min_x and max_x < W - 1:
         ans.append(connected_graph_size)
 print(ans)
