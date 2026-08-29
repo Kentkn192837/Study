@@ -8,8 +8,11 @@ matrix = [
     [1, 0, 0, 0, 0, 0, 0],
 ]
 
-queue = deque([(0, 0, 0)])
+que = deque([(0, 0, 0)])
 visited = set([])
 
-while queue:
-
+while que:
+    current_y, current_x, d = que.popleft()
+    if (current_y, current_x) in visited:
+        continue
+    visited.add((current_y, current_x))
