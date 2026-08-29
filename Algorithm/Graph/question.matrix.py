@@ -16,6 +16,9 @@ H, W = len(matrix), len(matrix[0])
 
 while que:
     current_y, current_x, d = que.popleft()
+    if current_y == H - 1 and current_x == W - 1:
+        print(d)
+        break
     if (current_y, current_x) in visited:
         continue
     visited.add((current_y, current_x))
@@ -31,3 +34,4 @@ while que:
         if (next_y, next_x) in visited:
             continue
         que.append((next_y, next_x, d + 1))
+print(-1)
