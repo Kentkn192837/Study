@@ -139,6 +139,38 @@ cp /dev/null 空のファイル; ls -l 空のファイル
 ## sedコマンド
 ## awkコマンド
 ## findコマンドでファイルの検索
+```sh
+# 30日以内に更新されたファイルの一覧を取得する
+find ./ -ctime -30
+
+# 180日より前に更新されたファイルの一覧を取得する
+find ./ -ctime +180
+
+# 30日以内に更新されたかつ180日より前に更新されたファイルの一覧を取得する
+find ./ -ctime -30 -and -ctime +180
+find ./ -ctime -30 -and -ctime +180 -and -name "*access*" -or -name "*error*"
+find ./ -ctime -30 -and -ctime +180 -and \(-name "*access*" -or -name "*error*" \)
+
+files="$(find ./ -ctime +180)"
+for file in $files
+do
+    echo "$file"
+done
+```
+
+## df（ディスクの空き容量を数値で取得する）
+```sh
+df
+df -h
+df -h | grep -e "^C:" | awk '{print $1}'
+Filesystem           1K-blocks      Used Available Use% Mounted on
+```
+- Filesystem : ディスク名
+- 1K-blocks : ディスクの総容量
+- Used : 使用量
+- Available : 空き容量
+- Use% : 使用率
+- Mounted on : ディレクトリツリー内でのマウント位置
 
 ## コマンドまとめ
 ```sh
